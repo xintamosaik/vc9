@@ -8,6 +8,7 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -16,4 +17,24 @@ body {
 body > * {
     max-width: 60ch;
     width: 100%;
+}
+
+/* all pages use nav ul li a as the main link style */
+/* we do not want points on the list items */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+/* We do not want underline on links until we hover */
+a {
+    text-decoration: none;
+    color: #ffffff;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+/* We want to change the color of the link on hover */
+a:hover {
+    color: #00ff00;
+    text-decoration: underline;
 }
