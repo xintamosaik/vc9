@@ -1,0 +1,19 @@
+body {
+    /* For now: dark-mode only, centered content */
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*all body elements will be maxxed at 60ch*/
+body > * {
+    max-width: 60ch;
+    width: 100%;
+}
