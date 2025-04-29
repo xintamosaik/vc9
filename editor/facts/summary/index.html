@@ -36,7 +36,7 @@
                 localStorage.setItem("summary.description", description);
             }
 
-         
+
 
             if (title || description) {
                 window.location.href = "./?update";
@@ -61,8 +61,8 @@
             <br />
 
             <label for="description">Summary</label>
-            <textarea id="description" name="description" rows="16" placeholder="I'm a .." ></textarea>
-       
+            <textarea id="description" name="description" rows="16" placeholder="I'm a .."></textarea>
+
 
             <br />
 
@@ -72,7 +72,7 @@
     <script>
         window.title.value = localStorage.getItem("summary.title") || "";
         window.description.value = localStorage.getItem("summary.description") || "";
- 
+
     </script>
 </body>
 
