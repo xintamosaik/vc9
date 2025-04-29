@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - Facts - Education - Edit</title>
+
+    <script src="../../../shared.js"></script>
+    <link rel="stylesheet" href="../../../shared.css" />
+</head>
+
+<body>
+    <nav>
+        <a href="../../../">Home</a> > <a href="../../">Editor</a> >
+        <a href="../">Facts</a> >
+        <a href="../education">Education</a> > Add |
+        <a href="../../preview" target="_blank" rel="noopener noreferrer">
+            Preview
+        </a>
+    </nav>
+
+    <main>
+        <h1>Education</h1>
+
+        <form id="education" action="./edit.html" method="get">
+            <input type="hidden" id="id" name="id" />
+
+            <input type="text" id="subject" name="subject" placeholder="Computer Science" required />
+            <label for="subject">Subject</label>
+
+            <br />
+
+            <input type="text" id="degree" name="degree" placeholder="Bachelor of Arts" required />
+            <label for="degree">Degree</label>
+
+            <br />
+
+            <input type="text" id="city" name="city" placeholder="Berlin" />
+            <label for="city">Location</label>
+
+            <br />
+
+            <input type="date" id="start" name="start" placeholder="Start Date" />
+            <label for="start">Start Date</label>
+
+            <br />
+
+            <input type="date" id="end" name="end" placeholder="End Date" />
+            <label for="end">End Date</label>
+            <br />
+
+            <button type="submit">Update</button>
+        </form>
+    </main>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.size === 0) {
+            window.location = './'
+        }
+
+        const id = urlParams.get('id')
+        if (!id) {
+            window.location = './'
+        }
+
+        window.id.value = id;
+        const job = localStorage.getItem('education.' + id)
+        const deserialized = JSON.parse(job)
+
+        window.subject.value = deserialized.subject
+        window.degree.value = deserialized.degree
+        window.city.value = deserialized.city
+        window.start.value = deserialized.start
+        window.end.value = deserialized.end
+
+        document.forms.education.onsubmit = (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            localStorage.setItem(`education.${id}`, JSON.stringify(data));
+            window.location = "./"
+        }
+    </script>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CV - Facts - Work - New</title>
+    <title>CV - Facts - Education - New</title>
 
     <script src="../../../shared.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
@@ -14,29 +14,29 @@
     <nav>
         <a href="../../../">Home</a> > <a href="../../">Editor</a> >
         <a href="../">Facts</a> >
-        <a href="../work">Work</a> > New |
+        <a href="../education">Education</a> > New |
         <a href="../../preview" target="_blank" rel="noopener noreferrer">
             Preview
         </a>
     </nav>
 
     <main>
-        <h1>Work</h1>
+        <h1>Education</h1>
 
-        <form id="work" action="./new.html" method="get">
+        <form id="education" action="./new.html" method="get">
             <input type="hidden" id="id" name="id" />
 
-            <input type="text" id="title" name="title" placeholder="Software Engineer" required />
-            <label for="title">Title</label>
+            <input type="text" id="subject" name="subject" placeholder="Computer Science" required />
+            <label for="subject">Subject</label>
 
             <br />
 
-            <input type="text" id="company" name="company" placeholder="Company" required />
-            <label for="company">Company</label>
+            <input type="text" id="degree" name="degree" placeholder="Bachelor of Arts" required />
+            <label for="degree">Degree</label>
 
             <br />
 
-            <input type="text" id="city" name="city" placeholder="Location" />
+            <input type="text" id="city" name="city" placeholder="Berlin" />
             <label for="city">Location</label>
 
             <br />
@@ -56,12 +56,12 @@
     <script>
         const timestamp = Date.now();
         window.id.value = timestamp
-        document.forms.work.onsubmit = (e) => {
+        document.forms.education.onsubmit = (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
-            localStorage.setItem(`work.${timestamp}`, JSON.stringify(data));
-            window.city = "./"
+            localStorage.setItem(`education.${timestamp}`, JSON.stringify(data));
+            window.location = "./"
         }
     </script>
 </body>

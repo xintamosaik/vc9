@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - Facts - Education</title>
+
+    <script src="../../../shared.js"></script>
+    <link rel="stylesheet" href="../../../shared.css" />
+</head>
+
+<body>
+    <nav>
+        <a href="../../../">Home</a> > <a href="../../">Editor</a> >
+        <a href="../">Facts</a> > Education |
+        <a href="../../preview" target="_blank" rel="noopener noreferrer">
+            Preview
+        </a>
+    </nav>
+
+    <main>
+        <h1>Education Experience</h1>
+        <p>
+            Here we can manage our education. We can add, edit and delete
+            educations.
+        </p>
+        <nav>
+            <ul>
+                <li>
+                    <a href="./new.html">Add new Education</a>
+                </li>
+            </ul>
+        </nav>
+        <template id="education">
+            <div>
+                <h2 class="subject"></h2>
+                <h3 class="degree"></h3>
+                <h4 class="city"></h4>
+                <p>
+                    <span class="start"></span>
+                    -
+                    <span class="end"></span>
+                </p>
+                <div style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            ">
+                    <a class="edit" href="./edit.html?id=">Edit</a>
+
+                    <button class="remove">remove</button>
+                </div>
+            </div>
+        </template>
+        <output id="educations"></output>
+    </main>
+
+    <script>
+        const filtered = Object.entries(localStorage).filter(([key, value]) =>
+            key.startsWith("education.")
+        );
+
+        filtered.forEach((entry) => {
+            const deserialized = JSON.parse(entry[1]);
+            console.log(deserialized);
+
+            const education = window.education.content.cloneNode(true);
+            education.querySelector(".subject").innerText = deserialized.subject;
+            education.querySelector(".degree").innerText = deserialized.degree;
+            education.querySelector(".city").innerText = deserialized.city;
+            education.querySelector(".start").innerText = deserialized.start;
+            education.querySelector(".end").innerText = deserialized.end || "present";
+
+            education.querySelector(".edit").href += deserialized.id;
+
+            const removeButton = education.querySelector(".remove");
+            removeButton.value += deserialized.id;
+
+            removeButton.onclick = () => {
+                const id = removeButton.value
+
+                const confirmed = confirm("Really?")
+                if (!confirmed) {
+                    return;
+                }
+
+                localStorage.removeItem("education." + id);
+
+                window.location = "./"
+            }
+
+            window.educations.appendChild(education);
+        });
+    </script>
+</body>
+
+</html>
