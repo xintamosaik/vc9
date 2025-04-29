@@ -30,79 +30,10 @@
                 <li>
                     <a href="./personal/">Personal</a>
                 </li>
-                <li>
-                    <button type="button" onclick="openDialog()">Personal</button>
-                </li>
 
             </ul>
         </nav>
-        <dialog id="personal">
-
-            <form method="dialog">
-                <label for="first">First Name</label>
-                <br>
-                <input type="text" id="first" name="first" placeholder="First Name" required>
-                <br>
-                <label for="last">Last Name</label>
-                <br>
-                <input type="text" id="last" name="last" placeholder="Last Name" required>
-                <br>
-                <label for="location">Location</label>
-                <br>
-                <input type="text" id="location" name="location" placeholder="Location">
-                <br>
-                <button value="update" formmethod="dialog" type="submit">Update</button>
-                <button value="cancel" formmethod="dialog" onclick="window.personal.close()">Cancel</button>
-
-            </form>
-
-            <script>
-                function openDialog() {
-                    window.personal.showModal();
-                    window.personal.dispatchEvent(new Event('dialogopened'));
-                }
-                window.personal.onclose = (e) => {
-                    if (e.target.returnValue !== "update") {
-                        return;
-                    }
-
-                    const form = e.target.firstElementChild;
-                    // We could check if the form exists but we let it crash instead. We devs.
-                    const formData = new FormData(form);
-
-                    const first = formData.get("first");
-                    localStorage.setItem("personal.first", first);
-                    const last = formData.get("last");
-                    localStorage.setItem("personal.last", last);
-                    const location = formData.get("location");
-                    if (location) {
-                        localStorage.setItem("personal.location", location);
-                    } else {
-                        localStorage.removeItem("personal.location");
-                    }
-                }
-
-                window.personal.addEventListener('dialogopened', () => {
-                    console.log('Dialog was opened!');
-                    // Do your setup here (e.g., focus an input)
-                    const first = localStorage.getItem("personal.first");
-                    const last = localStorage.getItem("personal.last");
-                    const location = localStorage.getItem("personal.location");
-
-                    if (first) {
-                        window.personal.querySelector("#first").value = first;
-                    }
-                    if (last) {
-                        window.personal.querySelector("#last").value = last;
-                    }
-                    if (location) {
-                        window.personal.querySelector("#location").value = location;
-                    }
-                });
-
-            </script>
-        </dialog>
-
+       
 
     </main>
 
