@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - Facts - Work - Edit</title>
+
+    <script src="../../../shared.js"></script>
+    <link rel="stylesheet" href="../../../shared.css" />
+</head>
+
+<body>
+    <script>
+        const timestamp = Date.now();
+    </script>
+    <nav>
+        <a href="../../../">Home</a> > <a href="../../">Editor</a> >
+        <a href="../">Facts</a> > 
+        <a href="../work">Work</a> > New |
+        <a href="../../preview" target="_blank" rel="noopener noreferrer">
+            Preview
+        </a>
+    </nav>
+
+    <main>
+        <h1>Work</h1>
+
+        <form action="./index.html" method="get">
+            <input type="hidden" id="id" name="id" />
+
+            <input type="text" id="title" name="title" placeholder="Software Engineer" required />
+            <label for="title">Title</label>
+
+            <br />
+
+            <input type="text" id="company" name="company" placeholder="Company" required />
+            <label for="company">Company</label>
+
+            <br />
+
+            <input type="text" id="location" name="location" placeholder="Location" />
+            <label for="location">Location</label>
+
+            <br />
+
+            <input type="date" id="start" name="start" placeholder="Start Date" />
+            <label for="start">Start Date</label>
+
+            <br />
+
+            <input type="date" id="end" name="end" placeholder="End Date" />
+            <label for="end">End Date</label>
+            <br />
+
+            <button type="submit">Add</button>
+        </form>
+    </main>
+    <script>
+       window.id.value = timestamp
+    </script>
+</body>
+
+</html>
