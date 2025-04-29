@@ -55,18 +55,31 @@ form {
   flex-direction: column;
   gap: 1ch;
 }
-
+textarea,
 input {
   background-color: var(--color-dark-bg);
   color: var(--color-dark-fg);
   border: none;
-  border-bottom: 1px solid var(--color-dark-fg);
   padding: 1ch 0;
   font-family: var(--font);
 }
 
+input {
+  border-bottom: 1px solid var(--color-dark-fg);
+}
+
+textarea {
+  border-top: 1px solid var(--color-dark-fg);
+}
+
 input:focus {
   outline: none;
+  border-bottom: 1px solid var(--color-dark-link);
+}
+
+textarea:focus {
+  outline: none;
+  border-top: 1px solid var(--color-dark-link);
   border-bottom: 1px solid var(--color-dark-link);
 }
 
