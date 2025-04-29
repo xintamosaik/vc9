@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     <nav>
         <a href="../../../">Home</a> > <a href="../../">Editor</a> >
         <a href="../">Facts</a> > Work |
@@ -23,7 +22,8 @@
     <main>
         <h1>Work Experience</h1>
         <p>
-            Here we can manage our work experience. We can add, edit and delete jobs.
+            Here we can manage our work experience. We can add, edit and delete
+            jobs.
         </p>
         <nav>
             <ul>
@@ -42,39 +42,56 @@
                     -
                     <span class="end"></span>
                 </p>
-                <ul>
-                    <li>
-                        <a class="edit" href="./edit.html?id=">Edit</a>
-                    </li>
-                    <li>
-                        <a class="remove" href="./remove.html?id=">Remove</a>
-                    </li>
-                </ul>
+                <div style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            ">
+                    <a class="edit" href="./edit.html?id=">Edit</a>
 
+                    <button class="remove">remove</button>
+                </div>
             </div>
         </template>
         <output id="jobs"></output>
-
     </main>
 
     <script>
-        const filtered = Object.entries(localStorage).filter(([key, value]) => key.startsWith("work."))
-
+        const filtered = Object.entries(localStorage).filter(([key, value]) =>
+            key.startsWith("work.")
+        );
 
         filtered.forEach((entry) => {
-            const deserialized = JSON.parse(entry[1])
-            console.log(deserialized)
+            const deserialized = JSON.parse(entry[1]);
+            console.log(deserialized);
 
             const job = window.job.content.cloneNode(true);
-            job.querySelector('.title').innerText = deserialized.title;
-            job.querySelector('.company').innerText = deserialized.company;
-            job.querySelector('.city').innerText = deserialized.city;
-            job.querySelector('.start').innerText = deserialized.start;
-            job.querySelector('.end').innerText = deserialized.end || "present"
-            job.querySelector('.remove').href += deserialized.id
-            job.querySelector('.edit').href += deserialized.id;
-            window.jobs.appendChild(job)
-        })
+            job.querySelector(".title").innerText = deserialized.title;
+            job.querySelector(".company").innerText = deserialized.company;
+            job.querySelector(".city").innerText = deserialized.city;
+            job.querySelector(".start").innerText = deserialized.start;
+            job.querySelector(".end").innerText = deserialized.end || "present";
+
+            job.querySelector(".edit").href += deserialized.id;
+
+            const removeButton = job.querySelector(".remove");
+            removeButton.value += deserialized.id;
+
+            removeButton.onclick = () => {
+                const id = removeButton.value
+
+                const confirmed = confirm("Really?")
+                if (!confirmed) {
+                    return;
+                }
+
+                localStorage.removeItem("work." + id);
+
+                window.location = "./"
+            }
+
+            window.jobs.appendChild(job);
+        });
     </script>
 </body>
 
