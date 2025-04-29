@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CV - Facts - Work - New</title>
+    <title>CV - Facts - Work - Edit</title>
 
     <script src="../../../shared.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
@@ -14,7 +14,7 @@
     <nav>
         <a href="../../../">Home</a> > <a href="../../">Editor</a> >
         <a href="../">Facts</a> > 
-        <a href="../work">Work</a> > New |
+        <a href="../work">Work</a> > Add |
         <a href="../../preview" target="_blank" rel="noopener noreferrer">
             Preview
         </a>
@@ -23,7 +23,7 @@
     <main>
         <h1>Work</h1>
 
-        <form id="work" action="./new.html" method="get">
+        <form id="work" action="./edit.html" method="get">
             <input type="hidden" id="id" name="id" />
 
             <input type="text" id="title" name="title" placeholder="Software Engineer" required />
@@ -36,8 +36,8 @@
 
             <br />
 
-            <input type="text" id="location" name="location" placeholder="Location" />
-            <label for="location">Location</label>
+            <input type="text" id="city" name="city" placeholder="Location" />
+            <label for="city">Location</label>
 
             <br />
 
@@ -50,17 +50,35 @@
             <label for="end">End Date</label>
             <br />
 
-            <button type="submit">Add</button>
+            <button type="submit">Update</button>
         </form>
     </main>
     <script>
-        const timestamp = Date.now();
-        window.id.value = timestamp
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.size === 0) {
+            window.location = './'
+        }
+        
+        const id = urlParams.get('id')
+        if (!id) {
+            window.location = './'
+        }
+ 
+        window.id.value = id;
+        const job = localStorage.getItem('work.' + id)
+        const deserialized = JSON.parse(job)
+   
+        window.title.value = deserialized.title
+        window.company.value = deserialized.company
+        window.city.value = deserialized.city
+        window.start.value = deserialized.start
+        window.end.value = deserialized.end
+
         document.forms.work.onsubmit = (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
-            localStorage.setItem(`work.${timestamp}`, JSON.stringify(data));
+            localStorage.setItem(`work.${id}`, JSON.stringify(data));
             window.location = "./"
         }
     </script>
