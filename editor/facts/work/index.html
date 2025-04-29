@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    
+
     <nav>
         <a href="../../../">Home</a> > <a href="../../">Editor</a> >
         <a href="../">Facts</a> > Work |
@@ -36,7 +36,7 @@
             <div>
                 <h2 class="title"></h2>
                 <h3 class="company"></h3>
-                <h4 class="location"></h4>
+                <h4 class="city"></h4>
                 <p>
                     <span class="start"></span>
                     -
@@ -50,35 +50,17 @@
                         <a class="remove" href="./remove.html?id=">Remove</a>
                     </li>
                 </ul>
-                
+
             </div>
         </template>
         <output id="jobs"></output>
 
     </main>
- 
-    <script>
-        // we will fill the output with the work experience that we have
-        // first we get all the entries in localstorage that start with work.
 
-        console.log(localStorage)
+    <script>
         const filtered = Object.entries(localStorage).filter(([key, value]) => key.startsWith("work."))
-        console.log(filtered)
-        /*
-        [
-    [
-        "work.1745940261687",
-        "{\"id\":\"1745940261687\",\"title\":\"asdf\",\"company\":\"asdf\",\"location\":\"\",\"start\":\"\",\"end\":\"\"}"
-    ],
-    [
-        "work.1745940126065",
-        "{\"id\":\"1745940126065\",\"title\":\"asd\",\"company\":\"asd\",\"location\":\"\",\"start\":\"\",\"end\":\"\"}"
-    ],
-    [
-        "work.1745940073548",
-        "{\"id\":\"1745940073548\",\"title\":\"s\",\"company\":\"s\",\"location\":\"\",\"start\":\"\",\"end\":\"\"}"
-    ]
-]*/
+
+
         filtered.forEach((entry) => {
             const deserialized = JSON.parse(entry[1])
             console.log(deserialized)
@@ -86,7 +68,7 @@
             const job = window.job.content.cloneNode(true);
             job.querySelector('.title').innerText = deserialized.title;
             job.querySelector('.company').innerText = deserialized.company;
-            job.querySelector('.location').innerText = deserialized.location;
+            job.querySelector('.city').innerText = deserialized.city;
             job.querySelector('.start').innerText = deserialized.start;
             job.querySelector('.end').innerText = deserialized.end || "present"
             job.querySelector('.remove').href += deserialized.id

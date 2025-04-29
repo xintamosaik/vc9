@@ -28,11 +28,9 @@ body > * {
 
 /* all pages use nav ul li a as the main link style */
 /* we do not want points on the list items */
-nav ul {
+ul {
   list-style: none;
   padding: 0;
-
- 
 }
 
 nav ul li a {
@@ -68,10 +66,8 @@ input {
   border-bottom: 1px solid var(--color-dark-fg);
 }
 
-
 input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
-
 }
 
 textarea {

@@ -13,7 +13,7 @@
 <body>
     <nav>
         <a href="../../../">Home</a> > <a href="../../">Editor</a> >
-        <a href="../">Facts</a> > 
+        <a href="../">Facts</a> >
         <a href="../work">Work</a> > Add |
         <a href="../../preview" target="_blank" rel="noopener noreferrer">
             Preview
@@ -58,16 +58,16 @@
         if (urlParams.size === 0) {
             window.location = './'
         }
-        
+
         const id = urlParams.get('id')
         if (!id) {
             window.location = './'
         }
- 
+
         window.id.value = id;
         const job = localStorage.getItem('work.' + id)
         const deserialized = JSON.parse(job)
-   
+
         window.title.value = deserialized.title
         window.company.value = deserialized.company
         window.city.value = deserialized.city
