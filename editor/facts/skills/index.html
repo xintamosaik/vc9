@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - Facts - Skills</title>
+
+    <script src="../../../shared.js"></script>
+    <link rel="stylesheet" href="../../../shared.css" />
+</head>
+
+<body>
+    <nav>
+        <a href="../../../">Home</a> > <a href="../../">Editor</a> >
+        <a href="../">Facts</a> > Work |
+        <a href="../../preview" target="_blank" rel="noopener noreferrer">
+            Preview
+        </a>
+    </nav>
+
+    <main>
+        <h1>Skills</h1>
+        <p>
+            Here we can manage our skills. We can add, edit and delete
+            skills.
+        </p>
+        <nav>
+            <ul>
+                <li>
+                    <a href="./new.html">Add new Skill</a>
+                </li>
+            </ul>
+        </nav>
+        <template id="skill">
+            <div>
+                <h2 class="title"></h2>
+                <h3 class="company"></h3>
+                <h4 class="city"></h4>
+                <p>
+                    <span class="start"></span>
+                    -
+                    <span class="end"></span>
+                </p>
+                <div style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            ">
+                    <a class="edit" href="./edit.html?id=">Edit</a>
+
+                    <button class="remove">remove</button>
+                </div>
+            </div>
+        </template>
+        <output id="skills"></output>
+    </main>
+
+    <script>
+        const filtered = Object.entries(localStorage).filter(([key, value]) =>
+            key.startsWith("skills.")
+        );
+
+        filtered.forEach((entry) => {
+            const deserialized = JSON.parse(entry[1]);
+            console.log(deserialized);
+
+            const skill = window.skill.content.cloneNode(true);
+            skill.querySelector(".title").innerText = deserialized.title;
+            skill.querySelector(".company").innerText = deserialized.company;
+            skill.querySelector(".city").innerText = deserialized.city;
+            skill.querySelector(".start").innerText = deserialized.start;
+            skill.querySelector(".end").innerText = deserialized.end || "present";
+
+            skill.querySelector(".edit").href += deserialized.id;
+
+            const removeButton = skill.querySelector(".remove");
+            removeButton.value += deserialized.id;
+
+            removeButton.onclick = () => {
+                const id = removeButton.value
+
+                const confirmed = confirm("Really?")
+                if (!confirmed) {
+                    return;
+                }
+
+                localStorage.removeItem("skills." + id);
+
+                window.location = "./"
+            }
+
+            window.skills.appendChild(skill);
+        });
+    </script>
+</body>
+
+</html>

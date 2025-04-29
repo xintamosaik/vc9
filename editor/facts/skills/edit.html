@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - Facts - Skills - Edit</title>
+
+    <script src="../../../shared.js"></script>
+    <link rel="stylesheet" href="../../../shared.css" />
+</head>
+
+<body>
+    <nav>
+        <a href="../../../">Home</a> > <a href="../../">Editor</a> >
+        <a href="../">Facts</a> >
+        <a href="../skill">Skills</a> > Add |
+        <a href="../../preview" target="_blank" rel="noopener noreferrer">
+            Preview
+        </a>
+    </nav>
+
+    <main>
+        <h1>Skills</h1>
+
+        <form id="skill" action="./edit.html" method="get">
+            <input type="hidden" id="id" name="id" />
+
+            <input type="text" id="title" name="title" placeholder="Software Engineer" required />
+            <label for="title">Title</label>
+
+            <br />
+
+            <input type="text" id="company" name="company" placeholder="Company" required />
+            <label for="company">Company</label>
+
+            <br />
+
+            <input type="text" id="city" name="city" placeholder="Location" />
+            <label for="city">Location</label>
+
+            <br />
+
+            <input type="date" id="start" name="start" placeholder="Start Date" />
+            <label for="start">Start Date</label>
+
+            <br />
+
+            <input type="date" id="end" name="end" placeholder="End Date" />
+            <label for="end">End Date</label>
+            <br />
+
+            <button type="submit">Update</button>
+        </form>
+    </main>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.size === 0) {
+            window.location = './'
+        }
+
+        const id = urlParams.get('id')
+        if (!id) {
+            window.location = './'
+        }
+
+        window.id.value = id;
+        const job = localStorage.getItem('skill.' + id)
+        const deserialized = JSON.parse(job)
+
+        window.title.value = deserialized.title
+        window.company.value = deserialized.company
+        window.city.value = deserialized.city
+        window.start.value = deserialized.start
+        window.end.value = deserialized.end
+
+        document.forms.skill.onsubmit = (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            localStorage.setItem(`skill.${id}`, JSON.stringify(data));
+            window.location = "./"
+        }
+    </script>
+</body>
+
+</html>
