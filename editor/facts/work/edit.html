@@ -67,14 +67,15 @@
         window.id.value = id;
         const job = localStorage.getItem('work.' + id)
         const deserialized = JSON.parse(job)
+        const form = document.forms.work;
 
-        window.title.value = deserialized.title
-        window.company.value = deserialized.company
-        window.city.value = deserialized.city
-        window.start.value = deserialized.start
-        window.end.value = deserialized.end
+        form.elements.title.value = deserialized.title
+        form.elements.company.value = deserialized.company
+        form.elements.city.value = deserialized.city
+        form.elements.start.value = deserialized.start
+        form.elements.end.value = deserialized.end
 
-        document.forms.work.onsubmit = (e) => {
+        form.onsubmit = (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());

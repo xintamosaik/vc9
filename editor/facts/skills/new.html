@@ -12,10 +12,11 @@
 
 <body>
     <nav>
-        <a href="../../../">Home</a> > <a href="../../">Editor</a> >
+        <a href="../../../">Home</a> > 
+        <a href="../../">Editor</a> >
         <a href="../">Facts</a> >
         <a href="../skills">Skills</a> > New |
-        <a href="../../preview" target="_blank" rel="noopener noreferrer">
+        <a href="../../../preview" target="_blank" rel="noopener noreferrer">
             Preview
         </a>
     </nav>
@@ -23,31 +24,22 @@
     <main>
         <h1>Skill</h1>
 
-        <form id="Skill" action="./new.html" method="get">
+        <form id="skill" action="./new.html" method="get">
             <input type="hidden" id="id" name="id" />
 
-            <input type="text" id="title" name="title" placeholder="Software Engineer" required />
-            <label for="title">Title</label>
+            <input type="text" id="name" name="name" placeholder="HTML" required />
+            <label for="name">Name</label>
 
             <br />
 
-            <input type="text" id="company" name="company" placeholder="Company" required />
-            <label for="company">Company</label>
+            <input type="number" min="1" max="100" id="level" name="level" placeholder="45" required />
+            <label for="level">Level</label>
 
             <br />
 
-            <input type="text" id="city" name="city" placeholder="Location" />
-            <label for="city">Location</label>
+            <input type="text" id="category" name="category" placeholder="Development" />
+            <label for="category">Category</label>
 
-            <br />
-
-            <input type="date" id="start" name="start" placeholder="Start Date" />
-            <label for="start">Start Date</label>
-
-            <br />
-
-            <input type="date" id="end" name="end" placeholder="End Date" />
-            <label for="end">End Date</label>
             <br />
 
             <button type="submit">Add</button>
@@ -55,13 +47,14 @@
     </main>
     <script>
         const timestamp = Date.now();
-        window.id.value = timestamp
-        document.forms.Skill.onsubmit = (e) => {
+        const form = document.forms.skill;
+        form.elements.id.value = timestamp
+        form.onsubmit = (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
-            localStorage.setItem(`Skill.${timestamp}`, JSON.stringify(data));
-            window.city = "./"
+            localStorage.setItem(`skill.${timestamp}`, JSON.stringify(data));
+            window.location = "./"
         }
     </script>
 </body>

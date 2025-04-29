@@ -55,13 +55,15 @@
     </main>
     <script>
         const timestamp = Date.now();
-        window.id.value = timestamp
-        document.forms.work.onsubmit = (e) => {
+        const form = document.forms.work;
+
+        form.elements.id.value = timestamp
+        form.onsubmit = (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
             localStorage.setItem(`work.${timestamp}`, JSON.stringify(data));
-            window.city = "./"
+            window.location = "./"
         }
     </script>
 </body>

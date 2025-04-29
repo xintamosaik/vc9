@@ -14,7 +14,7 @@
     <nav>
         <a href="../../../">Home</a> > <a href="../../">Editor</a> >
         <a href="../">Facts</a> >
-        <a href="../skill">Skills</a> > Add |
+        <a href="../skills">Skills</a> > Add |
         <a href="../../preview" target="_blank" rel="noopener noreferrer">
             Preview
         </a>
@@ -26,28 +26,19 @@
         <form id="skill" action="./edit.html" method="get">
             <input type="hidden" id="id" name="id" />
 
-            <input type="text" id="title" name="title" placeholder="Software Engineer" required />
-            <label for="title">Title</label>
+            <input type="text" id="name" name="name" placeholder="HTML" required />
+            <label for="name">Name</label>
 
             <br />
 
-            <input type="text" id="company" name="company" placeholder="Company" required />
-            <label for="company">Company</label>
+            <input type="number" min="1" max="100" id="level" name="level" placeholder="45" required />
+            <label for="level">Level</label>
 
             <br />
 
-            <input type="text" id="city" name="city" placeholder="Location" />
-            <label for="city">Location</label>
+            <input type="text" id="category" name="category" placeholder="Development" />
+            <label for="category">Category</label>
 
-            <br />
-
-            <input type="date" id="start" name="start" placeholder="Start Date" />
-            <label for="start">Start Date</label>
-
-            <br />
-
-            <input type="date" id="end" name="end" placeholder="End Date" />
-            <label for="end">End Date</label>
             <br />
 
             <button type="submit">Update</button>
@@ -65,16 +56,15 @@
         }
 
         window.id.value = id;
-        const job = localStorage.getItem('skill.' + id)
-        const deserialized = JSON.parse(job)
-
-        window.title.value = deserialized.title
-        window.company.value = deserialized.company
-        window.city.value = deserialized.city
-        window.start.value = deserialized.start
-        window.end.value = deserialized.end
-
-        document.forms.skill.onsubmit = (e) => {
+        const skill = localStorage.getItem('skill.' + id)
+        const deserialized = JSON.parse(skill)
+ 
+        const form = document.forms.skill
+        form.elements.name.value = deserialized.name
+        form.elements.level.value = deserialized.level
+        form.elements.category.value = deserialized.category
+   
+        form.onsubmit = (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());

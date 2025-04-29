@@ -13,7 +13,7 @@
 <body>
     <nav>
         <a href="../../../">Home</a> > <a href="../../">Editor</a> >
-        <a href="../">Facts</a> > Work |
+        <a href="../">Facts</a> > Skills |
         <a href="../../preview" target="_blank" rel="noopener noreferrer">
             Preview
         </a>
@@ -34,14 +34,10 @@
         </nav>
         <template id="skill">
             <div>
-                <h2 class="title"></h2>
-                <h3 class="company"></h3>
-                <h4 class="city"></h4>
-                <p>
-                    <span class="start"></span>
-                    -
-                    <span class="end"></span>
-                </p>
+                <h2 class="name"></h2>
+                <h3 class="level"></h3>
+                <h4 class="category"></h4>
+       
                 <div style="
               display: flex;
               justify-content: space-between;
@@ -58,19 +54,18 @@
 
     <script>
         const filtered = Object.entries(localStorage).filter(([key, value]) =>
-            key.startsWith("skills.")
+            key.startsWith("skill.")
         );
-
+        console.log(filtered)
         filtered.forEach((entry) => {
             const deserialized = JSON.parse(entry[1]);
             console.log(deserialized);
 
             const skill = window.skill.content.cloneNode(true);
-            skill.querySelector(".title").innerText = deserialized.title;
-            skill.querySelector(".company").innerText = deserialized.company;
-            skill.querySelector(".city").innerText = deserialized.city;
-            skill.querySelector(".start").innerText = deserialized.start;
-            skill.querySelector(".end").innerText = deserialized.end || "present";
+            skill.querySelector(".name").innerText = deserialized.name;
+            skill.querySelector(".level").innerText = deserialized.level;
+            skill.querySelector(".category").innerText = deserialized.category;
+
 
             skill.querySelector(".edit").href += deserialized.id;
 

@@ -63,8 +63,7 @@
 
         filtered.forEach((entry) => {
             const deserialized = JSON.parse(entry[1]);
-            console.log(deserialized);
-
+     
             const job = window.job.content.cloneNode(true);
             job.querySelector(".title").innerText = deserialized.title;
             job.querySelector(".company").innerText = deserialized.company;
