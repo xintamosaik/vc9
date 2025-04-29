@@ -63,26 +63,31 @@
         </p>
 
         <form action="./index.html" method="get">
-            <label for="first">First Name</label>
-            <br />
+         
+            
             <input type="text" id="first" name="first" placeholder="First Name" required />
-            <br />
-            <label for="last">Last Name</label>
-            <br />
+            <label for="first">First Name</label>
+            
+            <br>
+            
             <input type="text" id="last" name="last" placeholder="Last Name" required />
-            <br />
-            <label for="city">Location</label>
-            <br />
+            <label for="last">Last Name</label>
+            
+            <br>
+       
             <input type="text" id="city" name="city" placeholder="Location" />
-            <br />
+            <label for="city">Location</label>
+
+            <br>
+            
             <button type="submit">Update</button>
             
         </form>
     </main>
     <script>
         window.first.value = localStorage.getItem("first") || "";
-        window.city.value = localStorage.getItem("city") || "";
         window.last.value = localStorage.getItem("last") || "";
+        window.city.value = localStorage.getItem("city") || "";
     </script>
 </body>
 
