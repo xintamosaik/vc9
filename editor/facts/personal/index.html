@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - Facts - Personal</title>
+
+    <script src="../../../shared.js"></script>
+    <link rel="stylesheet" href="../../../shared.css" />
+</head>
+
+<body>
+    <script>
+        // before we do anything we check if there are get parameters
+        (function handleParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.size === 0) {
+                return;
+            }
+
+            if (urlParams.has("update")) {
+                alert("Your CV has been updated");
+
+                window.history.replaceState({}, document.title, "./");
+                return;
+            }
+
+            const first = urlParams.get("first");
+            if (first) {
+                localStorage.setItem("first", first);
+            }
+
+            const last = urlParams.get("last");
+            if (last) {
+                localStorage.setItem("last", last);
+            }
+
+            const city = urlParams.get("city");
+            if (city) {
+                localStorage.setItem("city", city);
+            }
+
+            if (first || last || city) {
+                window.location.href = "./?update";
+            }
+        })();
+    </script>
+    <nav>
+        <a href="../../../">Home</a> > <a href="../../">Editor</a> >
+        <a href="../">Facts</a> >
+        Personal |
+        <a href="../../preview" target="_blank" rel="noopener noreferrer">
+            Preview
+        </a>
+    </nav>
+
+    <main>
+        <h1>CV Facts</h1>
+        <p>
+            Here we can manage facts about us. Like our name, address, phone number,
+            email, etc.
+        </p>
+
+        <form action="./index.html" method="get">
+            <label for="first">First Name</label>
+            <br />
+            <input type="text" id="first" name="first" placeholder="First Name" required />
+            <br />
+            <label for="last">Last Name</label>
+            <br />
+            <input type="text" id="last" name="last" placeholder="Last Name" required />
+            <br />
+            <label for="city">Location</label>
+            <br />
+            <input type="text" id="city" name="city" placeholder="Location" />
+            <br />
+            <button type="submit">Update</button>
+            
+        </form>
+    </main>
+    <script>
+        window.first.value = localStorage.getItem("first") || "";
+        window.city.value = localStorage.getItem("city") || "";
+        window.last.value = localStorage.getItem("last") || "";
+    </script>
+</body>
+
+</html>
