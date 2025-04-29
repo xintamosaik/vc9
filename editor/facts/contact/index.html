@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CV - Facts - Personal</title>
+    <title>CV - Facts - Contact</title>
 
     <script src="../../../shared.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
@@ -21,28 +21,28 @@
 
             if (urlParams.has("update")) {
          
-                showSuccess("Your CV has been updated. Click to dismiss.");
+                showSuccess("Your Contact has been updated. Click to dismiss.");
                
                 window.history.replaceState({}, document.title, "./");
                 return;
             }
 
-            const first = urlParams.get("first");
-            if (first) {
-                localStorage.setItem("personal.first", first);
+            const email = urlParams.get("email");
+            if (email) {
+                localStorage.setItem("contact.email", email);
             }
 
-            const last = urlParams.get("last");
-            if (last) {
-                localStorage.setItem("personal.last", last);
+            const linkedin = urlParams.get("linkedin");
+            if (linkedin) {
+                localStorage.setItem("contact.linkedin", linkedin);
             }
 
-            const city = urlParams.get("city");
-            if (city) {
-                localStorage.setItem("personal.city", city);
+            const github = urlParams.get("github");
+            if (github) {
+                localStorage.setItem("contact.github", github);
             }
 
-            if (first || last || city) {
+            if (email || linkedin || github) {
                 window.location.href = "./?update";
             }
         })();
@@ -50,30 +50,26 @@
     <nav>
         <a href="../../../">Home</a> > <a href="../../">Editor</a> >
         <a href="../">Facts</a> >
-        Personal |
+        Contact |
         <a href="../../preview" target="_blank" rel="noopener noreferrer">
             Preview
         </a>
     </nav>
 
     <main>
-        <h1>Personal</h1>
+        <h1>Contact</h1>
 
         <form action="./index.html" method="get">
          
-            
-            <input type="text" id="first" name="first" placeholder="First Name" required />
-            <label for="first">First Name</label>
-            
+            <input type="text" id="email" name="email" placeholder="Email" />
+            <label for="email">Email</label>
             <br>
-            
-            <input type="text" id="last" name="last" placeholder="Last Name" required />
-            <label for="last">Last Name</label>
-            
+            <input type="text" id="linkedin" name="linkedin" placeholder="LinkedIn" />
+            <label for="linkedin">LinkedIn</label>
             <br>
-       
-            <input type="text" id="city" name="city" placeholder="Location" />
-            <label for="city">Location</label>
+            <input type="text" id="github" name="github" placeholder="GitHub" />
+            <label for="github">GitHub</label>
+
 
             <br>
             
@@ -82,9 +78,9 @@
         </form>
     </main>
     <script>
-        window.first.value = localStorage.getItem("personal.first") || "";
-        window.last.value = localStorage.getItem("personal.last") || "";
-        window.city.value = localStorage.getItem("personal.city") || "";
+        window.email.value = localStorage.getItem("contact.email") || "";
+        window.linkedin.value = localStorage.getItem("contact.linkedin") || "";
+        window.github.value = localStorage.getItem("contact.github") || "";
     </script>
 </body>
 
