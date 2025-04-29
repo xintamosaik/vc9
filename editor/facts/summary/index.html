@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - Facts - Summary</title>
+
+    <script src="../../../shared.js"></script>
+    <link rel="stylesheet" href="../../../shared.css" />
+</head>
+
+<body>
+    <script>
+        // before we do anything we check if there are get parameters
+        (function handleParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.size === 0) {
+                return;
+            }
+
+            if (urlParams.has("update")) {
+                showSuccess("Your Summary has been updated. Click to dismiss.");
+
+                window.history.replaceState({}, document.title, "./");
+                return;
+            }
+
+            const title = urlParams.get("title");
+            if (title) {
+                localStorage.setItem("summary.title", title);
+            }
+
+            const description = urlParams.get("description");
+            if (description) {
+                localStorage.setItem("summary.description", description);
+            }
+
+         
+
+            if (title || description) {
+                window.location.href = "./?update";
+            }
+        })();
+    </script>
+    <nav>
+        <a href="../../../">Home</a> > <a href="../../">Editor</a> >
+        <a href="../">Facts</a> > Summary |
+        <a href="../../preview" target="_blank" rel="noopener noreferrer">
+            Preview
+        </a>
+    </nav>
+
+    <main>
+        <h1>Summary</h1>
+
+        <form action="./index.html" method="get">
+            <input type="text" id="title" name="title" placeholder="Software Engineer" required />
+            <label for="first">Title</label>
+
+            <br />
+
+            <label for="description">Summary</label>
+            <textarea id="description" name="description" placeholder="I'm a .." ></textarea>
+            
+            <br />
+
+            <button type="submit">Update</button>
+        </form>
+    </main>
+    <script>
+        window.title.value = localStorage.getItem("summary.title") || "";
+        window.description.value = localStorage.getItem("summary.description") || "";
+ 
+    </script>
+</body>
+
+</html>
