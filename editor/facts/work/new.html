@@ -11,9 +11,6 @@
 </head>
 
 <body>
-    <script>
-        const timestamp = Date.now();
-    </script>
     <nav>
         <a href="../../../">Home</a> > <a href="../../">Editor</a> >
         <a href="../">Facts</a> > 
@@ -26,7 +23,7 @@
     <main>
         <h1>Work</h1>
 
-        <form action="./index.html" method="get">
+        <form id="work" action="./new.html" method="get">
             <input type="hidden" id="id" name="id" />
 
             <input type="text" id="title" name="title" placeholder="Software Engineer" required />
@@ -57,7 +54,15 @@
         </form>
     </main>
     <script>
-       window.id.value = timestamp
+        const timestamp = Date.now();
+        window.id.value = timestamp
+        document.forms.work.onsubmit = (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            localStorage.setItem(`work.${timestamp}`, JSON.stringify(data));
+            showSuccess("Your work experience has been added. Click to dismiss.");
+        }
     </script>
 </body>
 

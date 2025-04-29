@@ -32,15 +32,67 @@
                 </li>
             </ul>
         </nav>
-        <output>
+        <template id="job">
+            <div>
+                <h2 class="title"></h2>
+                <h3 class="company"></h3>
+                <h4 class="location"></h4>
+                <p>
+                    <span class="start"></span>
+                    -
+                    <span class="end"></span>
+                </p>
+                <ul>
+                    <li>
+                        <a class="edit" href="./edit.html?id=">Edit</a>
+                    </li>
+                    <li>
+                        <a class="remove" href="./remove.html?id=">Remove</a>
+                    </li>
+                </ul>
+                
+            </div>
+        </template>
+        <output id="jobs"></output>
 
-        </output>
-
-       
     </main>
  
     <script>
         // we will fill the output with the work experience that we have
+        // first we get all the entries in localstorage that start with work.
+
+        console.log(localStorage)
+        const filtered = Object.entries(localStorage).filter(([key, value]) => key.startsWith("work."))
+        console.log(filtered)
+        /*
+        [
+    [
+        "work.1745940261687",
+        "{\"id\":\"1745940261687\",\"title\":\"asdf\",\"company\":\"asdf\",\"location\":\"\",\"start\":\"\",\"end\":\"\"}"
+    ],
+    [
+        "work.1745940126065",
+        "{\"id\":\"1745940126065\",\"title\":\"asd\",\"company\":\"asd\",\"location\":\"\",\"start\":\"\",\"end\":\"\"}"
+    ],
+    [
+        "work.1745940073548",
+        "{\"id\":\"1745940073548\",\"title\":\"s\",\"company\":\"s\",\"location\":\"\",\"start\":\"\",\"end\":\"\"}"
+    ]
+]*/
+        filtered.forEach((entry) => {
+            const deserialized = JSON.parse(entry[1])
+            console.log(deserialized)
+
+            const job = window.job.content.cloneNode(true);
+            job.querySelector('.title').innerText = deserialized.title;
+            job.querySelector('.company').innerText = deserialized.company;
+            job.querySelector('.location').innerText = deserialized.location;
+            job.querySelector('.start').innerText = deserialized.start;
+            job.querySelector('.end').innerText = deserialized.end;
+            job.querySelector('.remove').href += deserialized.id
+            job.querySelector('.edit').href += deserialized.id;
+            window.jobs.appendChild(job)
+        })
     </script>
 </body>
 
