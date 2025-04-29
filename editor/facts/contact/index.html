@@ -20,9 +20,8 @@
             }
 
             if (urlParams.has("update")) {
-         
                 showSuccess("Your Contact has been updated. Click to dismiss.");
-               
+
                 window.history.replaceState({}, document.title, "./");
                 return;
             }
@@ -49,8 +48,7 @@
     </script>
     <nav>
         <a href="../../../">Home</a> > <a href="../../">Editor</a> >
-        <a href="../">Facts</a> >
-        Contact |
+        <a href="../">Facts</a> > Contact |
         <a href="../../preview" target="_blank" rel="noopener noreferrer">
             Preview
         </a>
@@ -60,21 +58,18 @@
         <h1>Contact</h1>
 
         <form action="./index.html" method="get">
-         
             <input type="text" id="email" name="email" placeholder="Email" />
             <label for="email">Email</label>
-            <br>
+            <br />
             <input type="text" id="linkedin" name="linkedin" placeholder="LinkedIn" />
             <label for="linkedin">LinkedIn</label>
-            <br>
+            <br />
             <input type="text" id="github" name="github" placeholder="GitHub" />
             <label for="github">GitHub</label>
 
+            <br />
 
-            <br>
-            
             <button type="submit">Update</button>
-            
         </form>
     </main>
     <script>
