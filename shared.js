@@ -1,5 +1,9 @@
 function showSuccess(msg) {
+  if (window.success) {
+    return;
+  }
   const notification = document.createElement("div");
+  notification.id = "success";
 
   notification.style.display = "flex";
   notification.style.flexDirection = "column";
