@@ -1,82 +1,80 @@
 :root {
-    --color-dark-bg: #121212;
-    --color-dark-fg: #ffffff;
-    --color-dark-link: #00ff95;
-    --font: 'Courier New', Courier, monospace;
+  --color-dark-bg: #121212;
+  --color-dark-fg: #ffffff;
+  --color-dark-link: #00ff95;
+  --font: "Courier New", Courier, monospace;
 }
 
 body {
-    /* For now: dark-mode only, centered content */
-    background-color: var(--color-dark-bg);
-    color: var(--color-dark-fg);
-    font-family: var(--font);
-    font-size: 16px;
-    line-height: 1.5;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  /* For now: dark-mode only, centered content */
+  background-color: var(--color-dark-bg);
+  color: var(--color-dark-fg);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /*all body elements will be maxxed at 60ch*/
 body > * {
-    max-width: 60ch;
-    width: 100%;
+  max-width: 60ch;
+  width: 100%;
 }
 
 /* all pages use nav ul li a as the main link style */
 /* we do not want points on the list items */
 nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 /* We do not want underline on links until we hover */
 a {
-    text-decoration: none;
-    color: #00ff95;
-    
+  text-decoration: none;
+  color: #00ff95;
 }
 
 /* We want to change the color of the link on hover */
 a:hover {
-    
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 1ch;
+  display: flex;
+  flex-direction: column;
+  gap: 1ch;
 }
 
 input {
-    background-color: var(--color-dark-bg);
-    color: var(--color-dark-fg);
-    border: none;
-    border-bottom: 1px solid var(--color-dark-fg);
-    padding: 1ch 0;
-    font-family: var(--font);
+  background-color: var(--color-dark-bg);
+  color: var(--color-dark-fg);
+  border: none;
+  border-bottom: 1px solid var(--color-dark-fg);
+  padding: 1ch 0;
+  font-family: var(--font);
 }
 
 input:focus {
-    outline: none;
-    border-bottom: 1px solid var(--color-dark-link);
+  outline: none;
+  border-bottom: 1px solid var(--color-dark-link);
 }
 
 button {
-    background-color: var(--color-dark-bg);
-    color: var(--color-dark-link);
-    border: 1px solid var(--color-dark-link);
-    padding: 1ch 2ch;
-    font-family: var(--font);
+  background-color: var(--color-dark-bg);
+  color: var(--color-dark-link);
+  border: 1px solid var(--color-dark-link);
+  padding: 1ch 2ch;
+  font-family: var(--font);
 }
 button:focus,
 button:hover {
-    background-color: var(--color-dark-link);
-    color: var(--color-dark-bg);
-    font-weight: 900;
-    cursor: pointer;
+  background-color: var(--color-dark-link);
+  color: var(--color-dark-bg);
+  font-weight: 900;
+  cursor: pointer;
 }

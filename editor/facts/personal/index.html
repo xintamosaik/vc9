@@ -20,8 +20,9 @@
             }
 
             if (urlParams.has("update")) {
-                alert("Your CV has been updated");
-
+         
+                showSuccess("Your CV has been updated. Click to dismiss.");
+               
                 window.history.replaceState({}, document.title, "./");
                 return;
             }
