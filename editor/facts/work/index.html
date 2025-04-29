@@ -88,7 +88,7 @@
             job.querySelector('.company').innerText = deserialized.company;
             job.querySelector('.location').innerText = deserialized.location;
             job.querySelector('.start').innerText = deserialized.start;
-            job.querySelector('.end').innerText = deserialized.end;
+            job.querySelector('.end').innerText = deserialized.end || "present"
             job.querySelector('.remove').href += deserialized.id
             job.querySelector('.edit').href += deserialized.id;
             window.jobs.appendChild(job)

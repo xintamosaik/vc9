@@ -61,7 +61,7 @@
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
             localStorage.setItem(`work.${timestamp}`, JSON.stringify(data));
-            showSuccess("Your work experience has been added. Click to dismiss.");
+            window.location = "./"
         }
     </script>
 </body>
