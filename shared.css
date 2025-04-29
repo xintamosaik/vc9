@@ -31,12 +31,18 @@ body > * {
 nav ul {
   list-style: none;
   padding: 0;
-  margin: 0;
+
+ 
+}
+
+nav ul li a {
+  display: block;
+  padding: 1rem 0;
 }
 /* We do not want underline on links until we hover */
 a {
   text-decoration: none;
-  color: #00ff95;
+  color: var(--color-dark-link);
 }
 
 /* We want to change the color of the link on hover */
