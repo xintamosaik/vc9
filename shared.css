@@ -68,6 +68,12 @@ input {
   border-bottom: 1px solid var(--color-dark-fg);
 }
 
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+
+}
+
 textarea {
   border-top: 1px solid var(--color-dark-fg);
 }
