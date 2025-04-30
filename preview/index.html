@@ -98,11 +98,7 @@
                         <span class="dash"></span>
                         <span class="city"></span>
                     </h4>
-                    <h4>
-                        <span class="start"></span>
-                        <span class="dash"></span>
-                        <span class="end"></span>
-                    </h4>
+
 
                     <p class="description">
 
@@ -112,11 +108,11 @@
             </template>
 
             <script id="script_experience">
-                const filtered = Object.entries(localStorage).filter(([key, value]) =>
+                const filtered_work = Object.entries(localStorage).filter(([key, value]) =>
                     key.startsWith("work.")
                 );
 
-                filtered.forEach((entry) => {
+                filtered_work.forEach((entry) => {
                     const deserialized = JSON.parse(entry[1]);
 
                     const job = window.job.content.cloneNode(true);
@@ -146,13 +142,49 @@
 
         <!-- SKILLS -->
 
-        <section>
+        <section id="skills">
             <h2>Skills</h2>
-            <ul id="skills">
+            <template id="skill">
+                <div class="skill entry">
+                    <h3>
+                        <span class="name"></span>
+                        <span class="dash"></span>
+                        <span class="level"></span>
 
-            </ul>
-            <script id="script_skills"> 
-                
+                    </h3>
+                </div>
+            </template>
+            <script id="script_skills">
+                const filtered_skills = Object.entries(localStorage).filter(([key, value]) =>
+                    key.startsWith("skill.")
+                );
+
+                filtered_skills.forEach((entry) => {
+                    const deserialized = JSON.parse(entry[1]);
+                    console.log(deserialized);
+
+                    const skill = window.skill.content.cloneNode(true);
+                    const name = deserialized.name;
+                    const name_html = skill.querySelector(".name");
+                    name_html.innerText = name;
+
+                    const level = deserialized.level;
+                    let level_category = "beginner";
+                    if (level > 66) {
+                        level_category = "expert";
+                    } else if (level > 33) {
+                        level_category = "intermediate";
+                    }
+                    const level_html = skill.querySelector(".level");
+                    level_html.innerText = level_category;
+
+                    // We need to treat this differently in the future.
+                    // const category = deserialized.category;
+                    // const category_html = skill.querySelector(".category");
+                    // category_html.innerText = category;
+
+                    window.skills.appendChild(skill);
+                });
             </script>
         </section>
 
