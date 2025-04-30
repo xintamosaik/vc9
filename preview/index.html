@@ -9,11 +9,23 @@
         .dash::before {
             content: "•";
         }
+
+        @media print {
+            aside {
+                display: none;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <aside>
+        <nav>
+            <a href="../" target="_blank">Home</a>
+        </nav>
+    </aside>
     <main>
+
         <section id="title">
             <h1>
                 <span id="personal_name"></span>
@@ -190,13 +202,13 @@
 
         <!-- EDUCATION -->
 
-        <section>
+        <section id="educations">
 
             <h2>Education</h2>
             <template id="education">
                 <div class="education entry">
                     <h3>
-                        <span class="title"></span>
+                        <span class="subject"></span>
                         <span class="dash"></span>
                         <span class="university"></span>
                     </h3>
@@ -205,19 +217,48 @@
                         <span class="dash"></span>
                         <span class="city"></span>
                     </h4>
+                    <h4>
+                        <span class="degree"></span>
+                    </h4>
                     <p class="description"></p>
                 </div>
             </template>
-            <script id="script_education"> </script>
+            <script id="script_education">
+                const filtered_education = Object.entries(localStorage).filter(([key, value]) =>
+                    key.startsWith("education.")
+                );
+
+                filtered_education.forEach((entry) => {
+                    const deserialized = JSON.parse(entry[1]);
+            
+
+                    const education = window.education.content.cloneNode(true);
+                    const subject = deserialized.subject;
+                    const subject_html = education.querySelector(".subject");
+                    subject_html.innerText = subject;
+
+                    const degree = deserialized.degree;
+                    const degree_html = education.querySelector(".degree");
+                    degree_html.innerText = degree;
+
+                    const city = deserialized.city;
+                    const city_html = education.querySelector(".city");
+                    city_html.innerText = city;
+
+                    const start = deserialized.start;
+                    const end = deserialized.end || "present";
+                    const date = start + " - " + end;
+                    const date_html = education.querySelector(".date");
+                    date_html.innerText = date;
+
+                    window.educations.appendChild(education);
+                });
+            </script>
 
         </section>
 
     </main>
-    <aside>
-        <nav>
-            <a href="../">Home</a>
-        </nav>
-    </aside>
+
 
 
 </body>
