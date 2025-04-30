@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Preview</title>
+    <style>
+        .dash::before {
+            content: "•";
+        }
+    </style>
 </head>
+
 <body>
     <main>
         <section id="title">
@@ -13,12 +20,15 @@
                 <span class="dash"></span>
                 <span id="summary_title"></span>
             </h1>
-            <script>
-                window.personal_name.innerText = localStorage.getItem("personal.first").trim() || "";
-                window.personal_name.innerText += " ";
-                window.personal_name.innerText += localStorage.getItem("personal.last").trim() || "";
-            
-                window.city.value = localStorage.getItem("personal.city") || "";
+            <script id="script_title">
+                const first = localStorage.getItem("personal.first").trim() || "";
+                const last = localStorage.getItem("personal.last").trim() || "";
+                const full = (first && last) ? first + " " + last : "(please add your name to the personal section)";
+                window.personal_name.innerText = full;
+
+                const title = localStorage.getItem("summary.title").trim() || "";
+                window.summary_title.innerText = title;
+
             </script>
         </section>
 
@@ -31,124 +41,119 @@
             <span class="dash"></span>
             <span>
                 <a id="contact_email">
-                   Email
+                    Email
                 </a>
             </span>
             <span class="dash"></span>
             <span>
-                <a href="https://github.com/xintamosaik" target="_blank">
+                <a id="contact_github" target="_blank">
                     GitHub
                 </a>
             </span>
             <span class="dash"></span>
             <span id="personal_city"></span>
+            <script id="script_contact">
+                const email = localStorage.getItem("contact.email").trim() || "";
+                window.contact_email.href = `mailto:${email}`;
+                window.contact_email.innerText = email;
+
+                const linkedin = localStorage.getItem("contact.linkedin").trim() || "";
+                window.contact_linkedin.href = linkedin;
+
+                const github = localStorage.getItem("contact.github").trim() || "";
+                window.contact_github.href = github;
+
+                const city = localStorage.getItem("personal.city").trim() || "";
+                window.personal_city.innerText = city;
+            </script>
         </section>
 
         <!-- SUMMARY-->
 
         <section id="summary">
             <h2>Summary</h2>
-            <p>
-                TypeScript expert and Software Engineer with a proven track record of optimizing legacy systems and building scalable web applications. Respected Tech Lead and Mentor who drives team excellence. Uniquely combines technical expertise with sociology background to foster continuous improvement in development culture and team dynamics.
+            <p id="summary_text">
+
             </p>
+            <script id="script_summary">
+                const summary = localStorage.getItem("summary.description").trim() || "";
+                window.summary_text.innerText = summary;
+
+            </script>
         </section>
 
         <!-- EXPERIENCE-->
 
         <section id="experience">
             <h2>Experience</h2>
+            <template id="job">
+                <div class="job entry">
+                    <h3>
+                        <span class="title"></span>
+                        <span class="dash"></span>
+                        <span class="company"></span>
+                    </h3>
+                    <h4>
+                        <span class="date"></span>
+                        <span class="dash"></span>
+                        <span class="city"></span>
+                    </h4>
+                    <h4>
+                        <span class="start"></span>
+                        <span class="dash"></span>
+                        <span class="end"></span>
+                    </h4>
 
-            <div class="job entry">
-                <h3>
-                    <span>Web Developer</span>
-                    <span class="dash"></span>
-                    <span>iq digital media marketing gmbh</span>
-                </h3>
-                <h4>
-                    <span>Jan 2024 - Present</span>
-                    <span class="dash"></span>
-                    <span>Düsseldorf, Germany</span>
-                </h4>
+                    <p class="description">
 
-                <ul>
-                    <li>
-                        Introduced and promoted TypeScript to enhance code quality and decrease error occurrences.
-                    </li>
-                    <li>
-                        Created a <strong>template builder</strong>, saving <strong>30%</strong> of development time and optimizing workflow.
-                    </li>
-                    <li>
-                        Implemented the <strong>'skyMover'</strong> system to enhance ad placement reliability and remove <strong>4,000 lines</strong> of code.
-                    </li>
-                    <li>
-                        Developed an ad controller to facilitate CI/CD processes and decrease dependence on third-party systems.
-                    </li>
-                    <li>
-                        Developed a Chrome extension that helps clients and product managers to quickly see health metrics of their websites. 
-                    </li>
-                    <li>
-                        Technologies: <strong>React, TypeScript, Tailwind, Vite, AWS, Github Actions</strong>
-                    </li>
-                </ul>
+                    </p>
 
-            </div>
+                </div>
+            </template>
 
-            <div class="job entry">
-                <h3>
-                    <span>Full Stack Developer</span>
-                    <span class="dash"></span>
-                    <span>Qanuk GmbH</span>
-                </h3>
-                <h4>
-                    <span>April 2021 - December 2023</span>
-                    <span class="dash"></span>
-                    <span>Osnabrück, Niedersachsen, Germany</span>
-                </h4>
+            <script id="script_experience">
+                const filtered = Object.entries(localStorage).filter(([key, value]) =>
+                    key.startsWith("work.")
+                );
 
-                <ul>
+                filtered.forEach((entry) => {
+                    const deserialized = JSON.parse(entry[1]);
 
-                    <li>
-                        Developed a scalable and dynamic search UI that connected 3rd party APIs and scraped articles using Elastic.
-                    </li>
-                    <li>
-                        Created a geolocation-based search UI for medical practitioners by developing custom WordPress plugins.
-                    </li>
-                    <li>
-                        Oversaw the creation of a WordPress plugin to streamline invoice management and event-related tasks.
-                    </li>
-                    <li>
-                        Integrated <strong>AJAX, jQuery, and REST APIs</strong> to enhance interactivity and performance.
-                    </li>
-                    <li>
-                        Provided mentorship and fostered collaborative development practices, increasing productivity.
-                    </li>
-                    <li>
-                        Technologies: <strong>PHP, WordPress, JavaScript, jQuery, AJAX, React, Docker</strong>
-                    </li>
-                </ul>
+                    const job = window.job.content.cloneNode(true);
 
-            </div>
+                    const title = deserialized.title;
+                    const title_html = job.querySelector(".title");
+                    title_html.innerText = title;
+
+                    const company = deserialized.company;
+                    const company_html = job.querySelector(".company");
+                    company_html.innerText = company;
+
+                    const city = deserialized.city;
+                    const city_html = job.querySelector(".city");
+                    city_html.innerText = city;
+
+                    const start = deserialized.start;
+                    const end = deserialized.end || "present";
+                    const date = start + " - " + end;
+                    const date_html = job.querySelector(".date");
+                    date_html.innerText = date;
+
+                    window.experience.appendChild(job);
+                }); 
+            </script>
         </section>
 
         <!-- SKILLS -->
 
         <section>
             <h2>Skills</h2>
-            <ul>
-                <li>
-                    <strong>Languages:</strong> TypeScript/Javascript, PHP, Golang, Java, CSS, HTML
-                </li>
-                <li>
-                    <strong>Frameworks:</strong> React, Tailwind, Next, Vite, Webpack
-                </li>
-                <li>
-                    <strong>Tools/Platforms:</strong> Git, Docker, Github (Actions), AWS
-                </li>
-                <li>
-                    <strong>Methodologies:</strong> Agile, Pair/Ensemble Programming, TDD/BDD
-                </li>
-            </ul>
+            <ul id="skills">
 
+            </ul>
+            <script id="script_skills"> 
+                
+            </script>
         </section>
 
         <!-- EDUCATION -->
@@ -156,22 +161,22 @@
         <section>
 
             <h2>Education</h2>
-
-            <div class="education entry">
-                <h3>
-                    <span>Master of Arts in Sociology</span>
-                    <span class="dash"></span>
-                    <span>Universität Bielefeld</span>
-
-                </h3>
-                <h4>
-                    <span>September 2021</span>
-                    <span class="dash"></span>
-                    <span>Bielefeld, NRW, Germany</span>
-                </h4>
-                <p>Specialization: Qualitative Studies and Workplace Studies/Ethnomethodology</p>
-            </div>
-
+            <template id="education">
+                <div class="education entry">
+                    <h3>
+                        <span class="title"></span>
+                        <span class="dash"></span>
+                        <span class="university"></span>
+                    </h3>
+                    <h4>
+                        <span class="date"></span>
+                        <span class="dash"></span>
+                        <span class="city"></span>
+                    </h4>
+                    <p class="description"></p>
+                </div>
+            </template>
+            <script id="script_education"> </script>
 
         </section>
 
@@ -181,7 +186,8 @@
             <a href="../">Home</a>
         </nav>
     </aside>
-    
+
 
 </body>
+
 </html>
