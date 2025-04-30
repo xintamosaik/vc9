@@ -310,6 +310,11 @@
                     const date_html = education.querySelector(".date");
                     date_html.innerText = date;
 
+                    const description = deserialized.description;
+                    const description_html = education.querySelector(".description")
+                    description_html.innerText = description;
+
+
                     window.educations.appendChild(education);
                 });
             </script>

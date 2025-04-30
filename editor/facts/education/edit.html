@@ -48,7 +48,12 @@
 
             <input type="date" id="end" name="end" placeholder="End Date" />
             <label for="end">End Date</label>
+            
             <br />
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="16" placeholder="Description"></textarea>
+            
 
             <button type="submit">Update</button>
         </form>
@@ -67,14 +72,16 @@
         window.id.value = id;
         const job = localStorage.getItem('education.' + id)
         const deserialized = JSON.parse(job)
+        const form = document.forms.education;
 
-        window.subject.value = deserialized.subject
-        window.degree.value = deserialized.degree
-        window.city.value = deserialized.city
-        window.start.value = deserialized.start
-        window.end.value = deserialized.end
+        form.elements.subject.value = deserialized.subject;
+        form.elements.degree.value = deserialized.degree;
+        form.elements.city.value = deserialized.city;
+        form.elements.start.value = deserialized.start;
+        form.elements.end.value = deserialized.end;
+        form.elements.description.value = deserialized.description;
 
-        document.forms.education.onsubmit = (e) => {
+        form.onsubmit = (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
