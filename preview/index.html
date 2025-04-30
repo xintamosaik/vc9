@@ -202,6 +202,10 @@
                     const date_html = job.querySelector(".date");
                     date_html.innerText = date;
 
+                    const description = deserialized.description;
+                    const description_html = job.querySelector(".description")
+                    description_html.innerText = description;
+
                     window.experience.appendChild(job);
                 }); 
             </script>

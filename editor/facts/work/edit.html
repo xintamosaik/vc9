@@ -48,6 +48,10 @@
 
             <input type="date" id="end" name="end" placeholder="End Date" />
             <label for="end">End Date</label>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="16" placeholder="Description"></textarea>
+            
             <br />
 
             <button type="submit">Update</button>
@@ -74,6 +78,7 @@
         form.elements.city.value = deserialized.city
         form.elements.start.value = deserialized.start
         form.elements.end.value = deserialized.end
+        form.elements.description.value = deserialized.description;
 
         form.onsubmit = (e) => {
             e.preventDefault();
