@@ -5,23 +5,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Preview</title>
+    <link rel="stylesheet" href="/shared.css" />
     <style>
         .dash::before {
             content: "•";
         }
+        body{
+            font-family: sans-serif;
+        }
+        aside,
+        main {
+            max-width: 210mm;
+        }
 
         @media print {
+            page {
+                size: A4;
+                margin: 0;
+            }
             aside {
                 display: none;
             }
+
+            body {
+                display: block;
+                background-color: white;
+                color: black;
+                font-size: 11pt;
+         
+                margin: 0;
+                padding: 0;
+            }
+            main {
+                padding-top: 10mm;
+                padding-left: 20mm;
+                padding-right: 20mm;
+                padding-bottom: 15mm;
+            }
+
+            h1, h2, h3, h4 {
+                margin-bottom: 0;
+                page-break-after: avoid;
+            }
+
+            h1 {
+                font-size: 20pt;
+            }
+
+            h2 {
+                font-size: 16pt;
+                margin-top: 1em;
+            }
+
+            a {
+                color: blue;
+            }
+
+            section {
+                page-break-inside: avoid;
+            }
+
+            .entry {
+                page-break-inside: avoid;
+            }
         }
     </style>
+ 
 </head>
 
 <body>
     <aside>
         <nav>
-            <a href="../" target="_blank">Home</a>
+            <a href="../editor" target="_blank">Editor</a>
         </nav>
     </aside>
     <main>
