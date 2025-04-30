@@ -11,7 +11,7 @@
 </head>
 
 <body>
- 
+
     <nav>
         <a href="../../../">Home</a> > <a href="../../">Editor</a> >
         <a href="../">Facts</a> > Data |
@@ -23,16 +23,144 @@
     <main>
         <h1>Data</h1>
 
-        <form action="./index.html" method="get">
-         
-            <textarea name="json" id="json"></textarea>
+        <form id="facts" action="./index.html" method="get">
+
+            <textarea name="json" id="json" rows="40"></textarea>
             <br />
 
-            <button type="submit">Update</button>
+            <script>
+                function parseJSON() {
+                    const json = document.forms.facts.elements.json.value;
+
+                    if (!json) {
+                        return;
+                    }
+
+                    let parsed;
+
+                    try {
+                        parsed = JSON.parse(document.getElementById('json').value);
+                    } catch (e) {
+                        console.log(e)
+                        alert("JSON misformed")
+                        return;
+                    }
+
+                    // Simple loader
+                    console.log(parsed)
+                    if (facts.personal) {
+                        if (facts.personal.last) {
+                            localStorage.setItem("personal.last", facts.personal.last)
+                        }
+                    }
+
+                    alert("Import successful!");
+                }
+
+
+            </script>
+            <button type="button" id="import" onclick="parseJSON()">Import JSON to LocalStorage</button>
+            <script>
+                function createJSON(e) {
+                    e.preventDefault();
+
+                    const facts = {}
+                    facts.personal = {}
+                    facts.personal.first = localStorage.getItem("personal.first") || "",
+                        facts.personal.last = localStorage.getItem("personal.last") || "",
+                        facts.personal.city = localStorage.getItem("personal.city") || "",
+                        facts.contact = {}
+                    facts.contact.email = localStorage.getItem("contact.email") || "",
+                        facts.contact.linkedin = localStorage.getItem("contact.linkedin") || "",
+                        facts.contact.github = localStorage.getItem("contact.github") || "",
+                        facts.summary = {}
+                    facts.summary.title = localStorage.getItem("summary.title") || "";
+                    facts.summary.description = localStorage.getItem("summary.description") || "";
+                    facts.work = []
+                    const filtered_work = Object.entries(localStorage).filter(([key, value]) =>
+                        key.startsWith("work.")
+                    );
+                    filtered_work.forEach(entry => {
+                        const deserialized = JSON.parse(entry[1]);
+
+                        facts.work.push(deserialized)
+                    })
+
+                    facts.education = [];
+                    const filtered_education = Object.entries(localStorage).filter(([key, value]) =>
+                        key.startsWith("education.")
+                    );
+                    filtered_education.forEach(entry => {
+                        const deserialized = JSON.parse(entry[1]);
+
+                        facts.education.push(deserialized)
+                    })
+
+                    facts.skills = []
+                    const filtered_skills = Object.entries(localStorage).filter(([key, value]) =>
+                        key.startsWith("skill.")
+                    );
+
+                    filtered_skills.forEach((entry) => {
+                        const deserialized = JSON.parse(entry[1]);
+
+                        facts.skills.push(deserialized)
+                    })
+
+                    document.forms.facts.elements.json.value = JSON.stringify(facts, null, 2);
+                }
+            </script>
+            <button type="button" id="export" onclick="createJSON(event)">Export JSON from LocalStorage</button>
+            <p id="import-status" style="padding-top: 1ch; font-style: italic;"></p>
+
         </form>
     </main>
     <script>
-      
+        const first = Personal.first.get();
+        console.log({ first })
+
+        const personal = Personal.get();
+        console.log({ personal })
+
+        Personal.set({
+            first: "Ulf",
+            last: "Dellbrügge",
+            city: "Düsseldorf, Germany"
+        })
+
+        const personal2 = Personal.get();
+        console.log({ personal2 })
+
+        const contact = Contact.get();
+        console.log({ contact })
+
+        Contact.set({
+            email: "ulf@dellbruegge.com",
+            linkedin: "https://www.linkedin.com/in/ulf-dellbruegge/",
+            github: "https://github.com/ulf-dellbruegge"
+        })
+
+        const contact2 = Contact.get();
+        console.log({ contact2 })
+
+        const summary = Summary.get();
+        console.log({ summary })
+
+        Summary.set({
+            title: "Software Engineer",
+            description: "I am a software engineer with a passion for building scalable and efficient systems."
+        })
+
+        const summary2 = Summary.get();
+        console.log({ summary2 })
+
+        const skills = Skills.get();
+        console.log({ skills })
+
+
+
+
+
     </script>
 </body>
 
