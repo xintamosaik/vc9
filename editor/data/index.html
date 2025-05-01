@@ -7,6 +7,9 @@
     <title>CV - Facts - Data</title>
 
     <script src="../../../shared.js"></script>
+    <script src="../facts/personal/index.js"></script>
+    <script src="../facts/contact/index.js"></script>
+    <script src="../facts/summary/index.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -49,10 +52,18 @@
                     // Simple loader
                     console.log(parsed)
                     if (facts.personal) {
-                        if (facts.personal.last) {
-                            localStorage.setItem("personal.last", facts.personal.last)
-                        }
+                        Personal.update(facts.personal)
                     }
+
+                    if (facts.contact) {
+                        Contact.update(facts.contact)
+                    }
+
+                    if (facts.summary) {
+                        Summary.update(facts.summary)
+                    }
+
+             
 
                     alert("Import successful!");
                 }
@@ -66,16 +77,16 @@
 
                     const facts = {}
                     facts.personal = {}
-                    facts.personal.first = localStorage.getItem("personal.first") || "",
-                        facts.personal.last = localStorage.getItem("personal.last") || "",
-                        facts.personal.city = localStorage.getItem("personal.city") || "",
+                    facts.personal.first = Personal.first() || "",
+                        facts.personal.last = Personal.last() || "",
+                        facts.personal.city = Personal.city() || "",
                         facts.contact = {}
-                    facts.contact.email = localStorage.getItem("contact.email") || "",
-                        facts.contact.linkedin = localStorage.getItem("contact.linkedin") || "",
-                        facts.contact.github = localStorage.getItem("contact.github") || "",
+                    facts.contact.email = Contact.email() || "",
+                        facts.contact.linkedin = Contact.linkedin() || "",
+                        facts.contact.github = Contact.github() || "",
                         facts.summary = {}
-                    facts.summary.title = localStorage.getItem("summary.title") || "";
-                    facts.summary.description = localStorage.getItem("summary.description") || "";
+                    facts.summary.title = Summary.title() || "";
+                    facts.summary.description = Summary.description() || "";
                     facts.work = []
                     const filtered_work = Object.entries(localStorage).filter(([key, value]) =>
                         key.startsWith("work.")
@@ -115,53 +126,7 @@
 
         </form>
     </main>
-    <script>
-        const first = Personal.first.get();
-        console.log({ first })
 
-        const personal = Personal.get();
-        console.log({ personal })
-
-        Personal.set({
-            first: "Ulf",
-            last: "Dellbrügge",
-            city: "Düsseldorf, Germany"
-        })
-
-        const personal2 = Personal.get();
-        console.log({ personal2 })
-
-        const contact = Contact.get();
-        console.log({ contact })
-
-        Contact.set({
-            email: "ulf@dellbruegge.com",
-            linkedin: "https://www.linkedin.com/in/ulf-dellbruegge/",
-            github: "https://github.com/ulf-dellbruegge"
-        })
-
-        const contact2 = Contact.get();
-        console.log({ contact2 })
-
-        const summary = Summary.get();
-        console.log({ summary })
-
-        Summary.set({
-            title: "Software Engineer",
-            description: "I am a software engineer with a passion for building scalable and efficient systems."
-        })
-
-        const summary2 = Summary.get();
-        console.log({ summary2 })
-
-        const skills = Skills.get();
-        console.log({ skills })
-
-
-
-
-
-    </script>
 </body>
 
 </html>

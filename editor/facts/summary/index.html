@@ -7,6 +7,7 @@
     <title>CV - Facts - Summary</title>
 
     <script src="../../../shared.js"></script>
+    <script src="./index.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -27,15 +28,12 @@
             }
 
             const title = urlParams.get("title");
-            if (title) {
-                localStorage.setItem("summary.title", title);
-            }
-
             const description = urlParams.get("description");
-            if (description) {
-                localStorage.setItem("summary.description", description);
-            }
-
+           
+            Summary.update({
+                title: title,
+                description: description
+            })
 
 
             if (title || description) {
@@ -70,8 +68,8 @@
         </form>
     </main>
     <script>
-        window.title.value = localStorage.getItem("summary.title") || "";
-        window.description.value = localStorage.getItem("summary.description") || "";
+        window.title.value = Summary.title() || "";
+        window.description.value = Summary.description() || "";
 
     </script>
 </body>
