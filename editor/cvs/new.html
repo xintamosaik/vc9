@@ -6,6 +6,10 @@
     <title>CV - Drafts</title>
 
     <script src="../../shared.js"></script>
+    <script src="../facts/work/index.js"></script>
+    <script src="../facts/education/index.js"></script>
+    <script src="../facts/skills/index.js"></script>
+    <script src="../facts/summary/index.js"></script>
     <link rel="stylesheet" href="../../shared.css">
 </head>
 <body>
@@ -24,12 +28,63 @@
         <p>
             Here we can add a new CV for a specific company or position.
         </p>
-        <form action="./add.html" method="get">
+        <form id="cv" action="./" method="get">
+            <input type="hidden" name="id" value="">
+
+            <input type="text" name="name" placeholder="Fintech">
+            <label for="company">Name</label>
+
+            <input type="text" name="company" placeholder="Google">
+            <label for="position">Company</label>
+
+            <input type="text" name="position" placeholder="Junior Software Engineer">
+            <label for="position">Position</label>
             
+            <!-- summary -->
+            <label for="summary">Summary</label>
+            <textarea name="summary" rows="8" placeholder="I am a software engineer with a passion for building scalable and efficient systems."></textarea>
+       
+            <!-- work experience -->
+            <output name="work"></output>
+
+            <!-- education -->
+            <output name="education"></output>
+
+            <!-- skills -->
+            <output name="skills"></output>
+
         </form>
   
     
     </main>
+
+    <script>
+        const form = document.forms.cv;
+             
+        const title = Summary.title() || "";
+        form.elements.position.value = title;
+
+        const description = Summary.description() || "";
+        form.elements.summary.value = description;
+
+        const work = Work.all();
+
+        work.forEach(job => {
+            console.log(job);
+        });
+
+        const educations = Education.all();
+
+        educations.forEach(education => {
+            console.log(education);
+        });
+
+        const skills = Skills.all();
+
+        skills.forEach(skill => {
+            console.log(skill);
+        });
+    </script>
     
     
 </body>
