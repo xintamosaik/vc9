@@ -122,7 +122,7 @@
                 </div>
             </template>
             <h2>Skills</h2>
-            <output name="skills" style="display: flex; flex-direction: column; gap: 2rem;"></output>
+            <output name="skills" style="display: flex; flex-direction: column;"></output>
 
             <button type="submit">Save</button>
         </form>
@@ -214,11 +214,7 @@
             console.log({ sector, company, position, summary })
 
             const jobs = Array.from(cv.elements.work.querySelectorAll('.job'));
-            console.log({ jobs })
-
-            const jobsData = jobs.map(job => {
-                console.log(job)
-           
+            const jobsData = jobs.map(job => {                
                 const id = job.dataset.id;
                 const description = job.querySelector('.description').textContent;
                 return { id, description }
@@ -226,7 +222,6 @@
             console.log({ jobsData })
 
             const educations = Array.from(cv.elements.education.querySelectorAll('.education'));
-            console.log({ educations })
             const educationsData = educations.map(education => {
       
                 const id = education.dataset.id;
