@@ -1,0 +1,77 @@
+{
+  "type": "object",
+  "properties": {
+    "personal": {
+      "type": "object",
+      "properties": {
+        "first": { "type": "string" },
+        "last": { "type": "string" },
+        "city": { "type": "string" }
+      },
+      "required": ["first", "last"]
+    },
+    "contact": {
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "linkedin": { "type": "string", "format": "uri" },
+        "github": { "type": "string", "format": "uri" }
+      },
+      "required": ["email"]
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["title", "description"]
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": ["string", "number"] },
+          "name": { "type": "string" },
+          "level": { "type": "string" },
+          "category": { "type": "string" }
+        },
+        "required": ["name", "level"]
+      }
+    },
+    "work": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": ["string", "number"] },
+          "title": { "type": "string" },
+          "company": { "type": "string" },
+          "city": { "type": "string" },
+          "start": { "type": "string", "format": "date" },
+          "end": { "type": ["string", "null"], "format": "date" },
+          "description": { "type": "string" }
+        },
+        "required": ["title", "company", "city", "start", "description"]
+      }
+    },
+    "education": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": ["string", "number"] },
+          "subject": { "type": "string" },
+          "degree": { "type": "string" },
+          "city": { "type": "string" },
+          "start": { "type": "string", "format": "date" },
+          "end": { "type": "string", "format": "date" },
+          "description": { "type": "string" }
+        },
+        "required": ["subject", "degree", "city", "start", "end", "description"]
+      }
+    }
+  },
+  "required": ["personal", "contact", "summary", "skills", "work", "education"]
+}
