@@ -11,7 +11,7 @@
     <script src="../facts/education/index.js"></script>
     <script src="../facts/skills/index.js"></script>
     <script src="../facts/summary/index.js"></script>
-   
+
 
     <link rel="stylesheet" href="../../shared.css">
 </head>
@@ -21,8 +21,8 @@
         <a href="../../">Home</a> >
         <a href="../">Editor</a> >
         <a href="./">Cvs</a> >
-        Add |
-        <a href="../../preview" target="_blank" rel="noopener noreferrer">Preview</a>
+        Add | Save to preview
+
     </nav>
 
     <main>
@@ -35,26 +35,26 @@
         <form id="cv" action="./" method="get">
             <input type="hidden" name="id" value="">
 
-            <input type="text" name="name" placeholder="Fintech">
-            <label for="company">Name</label>
+            <input type="text" name="sector" id="sector" placeholder="Fintech">
+            <label for="sector">Sector</label>
 
             <br />
 
-            <input type="text" name="company" placeholder="Google">
+            <input type="text" name="company" id="company" placeholder="Google">
             <label for="position">Company</label>
 
             <br />
 
-            <input type="text" name="position" placeholder="Junior Software Engineer">
+            <input type="text" name="position" id="position" placeholder="Junior Software Engineer">
             <label for="position">Position</label>
 
             <br />
 
             <label for="summary">Summary</label>
-            <textarea name="summary" rows="8"
+            <textarea name="summary" id="summary" rows="8"
                 placeholder="I am a software engineer with a passion for building scalable and efficient systems."></textarea>
 
-   
+
 
             <template id="job">
                 <div class="job entry" style="display:flex; flex-direction: column;">
@@ -75,12 +75,12 @@
                     <textarea class="description" name="description" id="description" rows="12"></textarea>
                 </div>
 
-          
+
             </template>
             <h2>Work Experience</h2>
             <output name="work" style="display: flex; flex-direction: column; gap: 2rem;"></output>
 
-    
+
 
             <template id="education">
                 <div class="education entry" style="display:flex; flex-direction: column;">
@@ -102,21 +102,24 @@
                     <textarea class="description" name="description" id="description" rows="4"></textarea>
                 </div>
 
-          
+
             </template>
             <h2>Education</h2>
             <output name="education" style="display: flex; flex-direction: column; gap: 2rem;"></output>
 
-    
+
 
             <template id="skill">
                 <div class="skill entry" style="display:flex; flex-direction: column;">
-                    <h2 class="name"></h2>
-                    <h3 class="level"></h3>
-                    <h4 class="description"></h4>
+                    <h3>
+                        <input type="checkbox" class="active" checked>
+                        <span class="name"></span>
+                        <span class="dash"></span>
+                        <span class="level"></span>
+                        <span class="dash"></span>
+                        <span class="description"></span>
+                    </h3>
                 </div>
-
-         
             </template>
             <h2>Skills</h2>
             <output name="skills" style="display: flex; flex-direction: column; gap: 2rem;"></output>
@@ -137,15 +140,16 @@
         form.elements.summary.value = description;
 
         const work = Work.all();
-
         work.forEach(job => {
-            console.log(job);
             const clone = window.job.content.cloneNode(true);
+            const container = clone.querySelector('.entry');
             const titleHTML = clone.querySelector('.title');
             const companyHTML = clone.querySelector('.company');
             const cityHTML = clone.querySelector('.city');
             const dateHTML = clone.querySelector('.date');
             const descriptionHTML = clone.querySelector('.description');
+
+            container.dataset.id = job.id;
 
             titleHTML.textContent = job.title;
             companyHTML.textContent = job.company;
@@ -157,16 +161,19 @@
         });
 
         const educations = Education.all();
-
         educations.forEach(education => {
-            console.log(education)
+
             const clone = window.education.content.cloneNode(true);
+            const container = clone.querySelector('.entry');
+
             const subjectHTML = clone.querySelector('.subject');
             const degreeHTML = clone.querySelector('.degree');
             const cityHTML = clone.querySelector('.city');
             const dateHTML = clone.querySelector('.date');
-       
+
             const descriptionHTML = clone.querySelector('.description');
+
+            container.dataset.id = education.id;
 
             subjectHTML.textContent = education.subject;
             degreeHTML.textContent = education.degree;
@@ -179,13 +186,15 @@
         });
 
         const skills = Skills.all();
-
         skills.forEach(skill => {
-            console.log(skill);
+
             const clone = window.skill.content.cloneNode(true);
+            const container = clone.querySelector('.entry');
             const nameHTML = clone.querySelector('.name');
             const levelHTML = clone.querySelector('.level');
             const descriptionHTML = clone.querySelector('.description');
+
+            container.dataset.id = skill.id;
 
             nameHTML.textContent = skill.name;
             levelHTML.textContent = skill.level;
@@ -196,10 +205,38 @@
 
         form.addEventListener('submit', (event) => {
             event.preventDefault();
-            console.log(form.elements);
-            const data = new FormData(form);
-            console.log(data); // empty?
+            const cv = event.target;
 
+            const sector = cv.elements.sector.value;
+            const company = cv.elements.company.value;
+            const position = cv.elements.position.value;
+            const summary = cv.elements.summary.value;
+            console.log({ sector, company, position, summary })
+
+            const jobs = Array.from(cv.elements.work.querySelectorAll('.job'));
+            console.log({ jobs })
+
+            const jobsData = jobs.map(job => {
+                const container = job.querySelector('.entry');
+                console.log(container)
+                const id = container.dataset.id;
+                const description = job.querySelector('.description').textContent;
+                return { id, description }
+            })
+            console.log({ jobsData })
+
+            const educations = Array.from(cv.elements.education.querySelectorAll('.education'));
+            console.log({ educations })
+            const educationsData = educations.map(education => {
+                const container = education.querySelector('.entry');
+                const id = container.dataset.id;
+                const description = education.querySelector('.description').textContent;
+                return { id, description }
+            })
+            console.log({ educationsData })
+
+            const skills = Array.from(cv.elements.skills.querySelectorAll('.skill'));
+            console.log({ skills })
         });
 
 
