@@ -7,6 +7,7 @@
     <title>CV - Facts - Skills</title>
 
     <script src="../../../shared.js"></script>
+    <script src="./index.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -53,24 +54,22 @@
     </main>
 
     <script>
-        const filtered = Object.entries(localStorage).filter(([key, value]) =>
-            key.startsWith("skill.")
-        );
-        console.log(filtered)
-        filtered.forEach((entry) => {
-            const deserialized = JSON.parse(entry[1]);
-            console.log(deserialized);
+        const filtered = Skills.all()
+        filtered.forEach((skill) => {
+            console.log(skill)
+  
+            
 
-            const skill = window.skill.content.cloneNode(true);
-            skill.querySelector(".name").innerText = deserialized.name;
-            skill.querySelector(".level").innerText = deserialized.level;
-            skill.querySelector(".category").innerText = deserialized.category;
+            const skillHtml = window.skill.content.cloneNode(true);
+            skillHtml.querySelector(".name").innerText = skill.name;
+            skillHtml.querySelector(".level").innerText = skill.level;
+            skillHtml.querySelector(".category").innerText = skill.category;
 
 
-            skill.querySelector(".edit").href += deserialized.id;
+            skillHtml.querySelector(".edit").href += skill.id;
 
-            const removeButton = skill.querySelector(".remove");
-            removeButton.value += deserialized.id;
+            const removeButton = skillHtml.querySelector(".remove");
+            removeButton.value += skill.id;
 
             removeButton.onclick = () => {
                 const id = removeButton.value
@@ -85,7 +84,7 @@
                 window.location = "./"
             }
 
-            window.skills.appendChild(skill);
+            window.skills.appendChild(skillHtml);
         });
     </script>
 </body>
