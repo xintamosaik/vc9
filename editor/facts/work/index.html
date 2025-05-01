@@ -7,6 +7,7 @@
     <title>CV - Facts - Work</title>
 
     <script src="../../../shared.js"></script>
+    <script src="./index.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -57,24 +58,22 @@
     </main>
 
     <script>
-        const filtered = Object.entries(localStorage).filter(([key, value]) =>
-            key.startsWith("work.")
-        );
+        const filtered = Work.all()
 
         filtered.forEach((entry) => {
-            const deserialized = JSON.parse(entry[1]);
+         
      
             const job = window.job.content.cloneNode(true);
-            job.querySelector(".title").innerText = deserialized.title;
-            job.querySelector(".company").innerText = deserialized.company;
-            job.querySelector(".city").innerText = deserialized.city;
-            job.querySelector(".start").innerText = deserialized.start;
-            job.querySelector(".end").innerText = deserialized.end || "present";
+            job.querySelector(".title").innerText = entry.title;
+            job.querySelector(".company").innerText = entry.company;
+            job.querySelector(".city").innerText = entry.city;
+            job.querySelector(".start").innerText = entry.start;
+            job.querySelector(".end").innerText = entry.end || "present";
 
-            job.querySelector(".edit").href += deserialized.id;
+            job.querySelector(".edit").href += entry.id;
 
             const removeButton = job.querySelector(".remove");
-            removeButton.value += deserialized.id;
+            removeButton.value += entry.id;
 
             removeButton.onclick = () => {
                 const id = removeButton.value
@@ -84,7 +83,7 @@
                     return;
                 }
 
-                localStorage.removeItem("work." + id);
+                Work.remove(id)
 
                 window.location = "./"
             }
