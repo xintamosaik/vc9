@@ -217,9 +217,9 @@
             console.log({ jobs })
 
             const jobsData = jobs.map(job => {
-                const container = job.querySelector('.entry');
-                console.log(container)
-                const id = container.dataset.id;
+                console.log(job)
+           
+                const id = job.dataset.id;
                 const description = job.querySelector('.description').textContent;
                 return { id, description }
             })
@@ -228,8 +228,8 @@
             const educations = Array.from(cv.elements.education.querySelectorAll('.education'));
             console.log({ educations })
             const educationsData = educations.map(education => {
-                const container = education.querySelector('.entry');
-                const id = container.dataset.id;
+      
+                const id = education.dataset.id;
                 const description = education.querySelector('.description').textContent;
                 return { id, description }
             })
