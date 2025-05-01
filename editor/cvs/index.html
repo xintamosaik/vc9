@@ -28,9 +28,11 @@
         </nav>
         <template id="cv-template">
         
-                <a class="edit" href="./edit.html?id=">
+                <a class="edit" href="./edit.html?id=" style="display: flex; align-items: center; gap: 10px;">
                     <span class="id"></span>
+             
                     <span class="sector"></span>
+                
                     <span class="company"></span>
                 </a>
         
@@ -51,11 +53,11 @@
                 const edit = clone.querySelector('.edit');
                 const id = clone.querySelector('.id');
                 const data = JSON.parse(value);
+                const datetime = new Date(Number(data.id)).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                id.textContent = `CV from ${datetime}`
                 sector.textContent = data.sector
                 company.textContent = data.company
-                if (!data.sector || !data.company) {
-                    id.textContent = data.id;
-                }
+
                 edit.href += data.id;
 
                 output.appendChild(clone);

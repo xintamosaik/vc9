@@ -72,7 +72,7 @@
                     <label for="description">
                         Description
                     </label>
-                    <textarea class="description" name="description" id="description" rows="12"></textarea>
+                    <textarea class="description" name="description" rows="12"></textarea>
                 </div>
 
 
@@ -99,7 +99,7 @@
                     <label for="description">
                         Description
                     </label>
-                    <textarea class="description" name="description" id="description" rows="4"></textarea>
+                    <textarea class="description" name="description" rows="4"></textarea>
                 </div>
 
 
@@ -155,7 +155,7 @@
             companyHTML.textContent = job.company;
             cityHTML.textContent = job.city;
             dateHTML.textContent = job.start + " - " + job.end || "present";
-            descriptionHTML.textContent = job.description;
+            descriptionHTML.value = job.description;
 
             form.elements.work.appendChild(clone);
         });
@@ -179,7 +179,7 @@
             degreeHTML.textContent = education.degree;
             cityHTML.textContent = education.city;
             dateHTML.textContent = education.start + " - " + education.end || "present";
-            descriptionHTML.textContent = education.description;
+            descriptionHTML.value = education.description;
 
             form.elements.education.appendChild(clone);
 
@@ -198,7 +198,7 @@
 
             nameHTML.textContent = skill.name;
             levelHTML.textContent = skill.level;
-            descriptionHTML.textContent = skill.description;
+            descriptionHTML.value = skill.description;
 
             form.elements.skills.appendChild(clone);
         });
@@ -211,6 +211,38 @@
             const serialized = localStorage.getItem(`cv.${id}`);
             const data = JSON.parse(serialized);
             console.log({ data })
+
+            if (data.sector) {
+                form.elements.sector.value = data.sector;
+            }
+
+            if (data.company) {
+                form.elements.company.value = data.company;
+            }
+
+            if (data.position) {
+                form.elements.position.value = data.position;
+            }
+
+            if (data.summary) {
+                form.elements.summary.value = data.summary;
+            }
+
+            const jobs = data.work;
+            console.log({ jobs })
+
+            jobs.forEach(job => {
+                console.log({ job })
+                const id = job.id;
+                const jobHTML = form.elements.work.querySelector(`[data-id="${id}"]`);
+                console.log({ jobHTML })
+                const descriptionHTML = jobHTML.querySelector('.description');
+                console.log({ descriptionHTML })
+                console.log(job.description)
+                descriptionHTML.value = job.description;
+
+            });
+
         }
 
         form.addEventListener('submit', (event) => {
@@ -224,18 +256,24 @@
             console.log({ sector, company, position, summary })
 
             const jobs = Array.from(cv.elements.work.querySelectorAll('.job'));
-            const jobsData = jobs.map(job => {                
+            const jobsData = jobs.map(job => {
                 const id = job.dataset.id;
-                const description = job.querySelector('.description').textContent;
+                const descriptionHTML = job.querySelector('.description');
+                console.log({ descriptionHTML })
+                const description = descriptionHTML.value;
+                console.log({ description })
+
+
+                console.log({ id, description })
                 return { id, description }
             })
             console.log({ jobsData })
 
             const educations = Array.from(cv.elements.education.querySelectorAll('.education'));
             const educationsData = educations.map(education => {
-      
+
                 const id = education.dataset.id;
-                const description = education.querySelector('.description').textContent;
+                const description = education.querySelector('.description').value;
                 return { id, description }
             })
             console.log({ educationsData })
@@ -250,7 +288,7 @@
             console.log({ skillsData })
             const timestamp = Date.now();
             const data = {
-                id: timestamp,
+                id: id ? id : `${timestamp}`,
                 sector,
                 company,
                 position,
@@ -262,8 +300,8 @@
             }
             console.log({ data })
             const serialized = JSON.stringify(data);
-            localStorage.setItem(`cv.${timestamp}`, serialized);
-            window.location.href = `./`;
+            localStorage.setItem(`cv.${id ? id : timestamp}`, serialized);
+            // window.location.href = `./`;
         });
 
 
