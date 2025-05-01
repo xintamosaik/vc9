@@ -27,7 +27,7 @@
 
     <main>
         <h1>
-            Add new CV
+            New CV
         </h1>
         <p>
             Here we can add a new CV for a specific company or position.
@@ -38,50 +38,76 @@
             <input type="text" name="name" placeholder="Fintech">
             <label for="company">Name</label>
 
+            <br />
+
             <input type="text" name="company" placeholder="Google">
             <label for="position">Company</label>
 
+            <br />
+
             <input type="text" name="position" placeholder="Junior Software Engineer">
             <label for="position">Position</label>
+
+            <br />
 
             <label for="summary">Summary</label>
             <textarea name="summary" rows="8"
                 placeholder="I am a software engineer with a passion for building scalable and efficient systems."></textarea>
 
+   
+
             <template id="job">
                 <div class="job entry" style="display:flex; flex-direction: column;">
-
-
-                    <h2 class="title"></h2>
-                    <h3 class="company"></h3>
-                    <h4 class="city"></h4>
-                    <h5 class="start"></h5>
-                    <h5 class="end"></h5>
+                    <h3>
+                        <span class="title"></span>
+                        <span class="dash"></span>
+                        <span class="company"></span>
+                    </h3>
+                    <h4>
+                        <span class="date"></span>
+                        <span class="dash"></span>
+                        <span class="city"></span>
+                    </h4>
 
                     <label for="description">
                         Description
                     </label>
-                    <textarea class="description" name="description" id="description" rows="8"></textarea>
+                    <textarea class="description" name="description" id="description" rows="12"></textarea>
                 </div>
+
+          
             </template>
-            <output name="work"></output>
+            <h2>Work Experience</h2>
+            <output name="work" style="display: flex; flex-direction: column; gap: 2rem;"></output>
+
+    
 
             <template id="education">
                 <div class="education entry" style="display:flex; flex-direction: column;">
-                    <h2 class="subject"></h2>
-                    <h3 class="degree"></h3>
-                    <h4 class="city"></h4>
-                    <h5 class="start"></h5>
-                    <h5 class="end"></h5>
+                    <h3>
+                        <span class="subject"></span>
+                        <span class="dash"></span>
+                        <span class="university"></span>
+                    </h3>
+                    <h4>
+                        <span class="date"></span>
+                        <span class="dash"></span>
+                        <span class="city"></span>
+                    </h4>
+                    <h4 class="degree"></h4>
 
                     <label for="description">
                         Description
                     </label>
-                    <textarea class="description" name="description" id="description" rows="8"></textarea>
+                    <textarea class="description" name="description" id="description" rows="4"></textarea>
                 </div>
-            </template>
 
-            <output name="education"></output>
+          
+            </template>
+            <h2>Education</h2>
+            <output name="education" style="display: flex; flex-direction: column; gap: 2rem;"></output>
+
+    
 
             <template id="skill">
                 <div class="skill entry" style="display:flex; flex-direction: column;">
@@ -89,9 +115,13 @@
                     <h3 class="level"></h3>
                     <h4 class="description"></h4>
                 </div>
-            </template>
-            <output name="skills"></output>
 
+         
+            </template>
+            <h2>Skills</h2>
+            <output name="skills" style="display: flex; flex-direction: column; gap: 2rem;"></output>
+
+            <button type="submit">Save</button>
         </form>
 
 
@@ -114,15 +144,13 @@
             const titleHTML = clone.querySelector('.title');
             const companyHTML = clone.querySelector('.company');
             const cityHTML = clone.querySelector('.city');
-            const startHTML = clone.querySelector('.start');
-            const endHTML = clone.querySelector('.end');
+            const dateHTML = clone.querySelector('.date');
             const descriptionHTML = clone.querySelector('.description');
 
             titleHTML.textContent = job.title;
             companyHTML.textContent = job.company;
             cityHTML.textContent = job.city;
-            startHTML.textContent = job.start;
-            endHTML.textContent = job.end;
+            dateHTML.textContent = job.start + " - " + job.end || "present";
             descriptionHTML.textContent = job.description;
 
             form.elements.work.appendChild(clone);
@@ -131,19 +159,19 @@
         const educations = Education.all();
 
         educations.forEach(education => {
+            console.log(education)
             const clone = window.education.content.cloneNode(true);
             const subjectHTML = clone.querySelector('.subject');
             const degreeHTML = clone.querySelector('.degree');
             const cityHTML = clone.querySelector('.city');
-            const startHTML = clone.querySelector('.start');
-            const endHTML = clone.querySelector('.end');
+            const dateHTML = clone.querySelector('.date');
+       
             const descriptionHTML = clone.querySelector('.description');
 
             subjectHTML.textContent = education.subject;
             degreeHTML.textContent = education.degree;
             cityHTML.textContent = education.city;
-            startHTML.textContent = education.start;
-            endHTML.textContent = education.end;
+            dateHTML.textContent = education.start + " - " + education.end || "present";
             descriptionHTML.textContent = education.description;
 
             form.elements.education.appendChild(clone);
@@ -165,6 +193,16 @@
 
             form.elements.skills.appendChild(clone);
         });
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            console.log(form.elements);
+            const data = new FormData(form);
+            console.log(data); // empty?
+
+        });
+
+
     </script>
 
 
