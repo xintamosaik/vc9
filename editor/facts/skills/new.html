@@ -7,6 +7,7 @@
     <title>CV - Facts - Skill - New</title>
 
     <script src="../../../shared.js"></script>
+    <script src="./index.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -32,7 +33,7 @@
 
             <br />
 
-            <input type="number" min="1" max="100" id="level" name="level" placeholder="45" required />
+            <input type="text" id="level" name="level" placeholder="45" required />
             <label for="level">Level</label>
 
             <br />
@@ -53,7 +54,7 @@
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
-            localStorage.setItem(`skill.${timestamp}`, JSON.stringify(data));
+            Skills.add(data)
             window.location = "./"
         }
     </script>

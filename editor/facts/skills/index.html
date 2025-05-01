@@ -38,7 +38,7 @@
                 <h2 class="name"></h2>
                 <h3 class="level"></h3>
                 <h4 class="category"></h4>
-       
+
                 <div style="
               display: flex;
               justify-content: space-between;
@@ -57,14 +57,11 @@
         const filtered = Skills.all()
         filtered.forEach((skill) => {
             console.log(skill)
-  
-            
 
             const skillHtml = window.skill.content.cloneNode(true);
             skillHtml.querySelector(".name").innerText = skill.name;
             skillHtml.querySelector(".level").innerText = skill.level;
             skillHtml.querySelector(".category").innerText = skill.category;
-
 
             skillHtml.querySelector(".edit").href += skill.id;
 

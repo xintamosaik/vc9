@@ -7,6 +7,7 @@
     <title>CV - Facts - Skills - Edit</title>
 
     <script src="../../../shared.js"></script>
+    <script src="./index.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -55,20 +56,19 @@
             window.location = './'
         }
 
-        window.id.value = id;
-        const skill = localStorage.getItem('skill.' + id)
-        const deserialized = JSON.parse(skill)
- 
+        const skill = Skills.get(id)
+      
         const form = document.forms.skill
-        form.elements.name.value = deserialized.name
-        form.elements.level.value = deserialized.level
-        form.elements.category.value = deserialized.category
+        form.elements.id.value = id
+        form.elements.name.value = skill.name
+        form.elements.level.value = skill.level
+        form.elements.category.value = skill.category
    
         form.onsubmit = (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
-            localStorage.setItem(`skill.${id}`, JSON.stringify(data));
+            Skills.update(id, data)
             window.location = "./"
         }
     </script>

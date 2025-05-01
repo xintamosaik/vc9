@@ -6,10 +6,10 @@ const Skills = {
      * @param {string} skill.level
      * @param {string} skill.category
      */
-    isValid: function(skill) {
+    isValid: function (skill) {
         if (!skill || typeof skill !== 'object') return false;
         if (!this.isValidString(skill.name)) return false;
-        if (!this.isValidLevel(skill.level)) return false;
+        if (!this.isValidString(skill.level)) return false;
         if (!this.isValidString(skill.category)) return false;
         return true;
     },
@@ -18,26 +18,23 @@ const Skills = {
      * Check if string is valid
      * @param {string} str
      */
-    isValidString: function(str) {
+    isValidString: function (str) {
         return typeof str === 'string' && str.trim().length > 0;
     },
 
-    /**
-     * Check if level is valid
-     * @param {string} level
-     */
-    isValidLevel: function(level) {
-        if (!this.isValidString(level)) return false;
-        return ['beginner', 'intermediate', 'advanced', 'expert'].includes(level.toLowerCase());
+    get: function (id) {
+        const key = `skill.${id}`;
+        const parsed = JSON.parse(localStorage.getItem(key))
+        return parsed
     },
 
     /**
      * Get all skills
      * @returns {Array<Object>}
      */
-    all: function() {
+    all: function () {
         const skills = [];
-        const entries = Object.entries(localStorage).filter(([key]) => 
+        const entries = Object.entries(localStorage).filter(([key]) =>
             key.startsWith("skill.")
         );
 
@@ -60,7 +57,7 @@ const Skills = {
      * @param {string} skill.category
      * @returns {Object} The stored skill with id
      */
-    add: function(skill) {
+    add: function (skill) {
         if (!this.isValid(skill)) {
             throw new Error('Invalid skill data');
         }
@@ -82,7 +79,7 @@ const Skills = {
      * @param {number} id
      * @returns {boolean} Whether the skill was removed
      */
-    remove: function(id) {
+    remove: function (id) {
         const key = `skill.${id}`;
         if (localStorage.getItem(key)) {
             localStorage.removeItem(key);
@@ -100,7 +97,7 @@ const Skills = {
      * @param {string} skill.category
      * @returns {Object|null} The updated skill or null if not found
      */
-    update: function(id, skill) {
+    update: function (id, skill) {
         if (!this.isValid(skill)) {
             throw new Error('Invalid skill data');
         }
@@ -123,8 +120,8 @@ const Skills = {
     /**
      * Clear all skills
      */
-    clear: function() {
-        const keys = Object.keys(localStorage).filter(key => 
+    clear: function () {
+        const keys = Object.keys(localStorage).filter(key =>
             key.startsWith("skill.")
         );
         keys.forEach(key => localStorage.removeItem(key));
@@ -134,13 +131,13 @@ const Skills = {
      * Get all skills sorted by category and name
      * @returns {Array<Object>} Sorted skills
      */
-    sorted: function() {
+    sorted: function () {
         const skills = this.all();
         return skills.sort((a, b) => {
             // First sort by category
             const categoryCompare = a.category.localeCompare(b.category);
             if (categoryCompare !== 0) return categoryCompare;
-            
+
             // Then by name within same category
             return a.name.localeCompare(b.name);
         });
@@ -148,5 +145,4 @@ const Skills = {
 }
 
 
-  
-  
+

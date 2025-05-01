@@ -10,6 +10,7 @@
     <script src="../facts/personal/index.js"></script>
     <script src="../facts/contact/index.js"></script>
     <script src="../facts/summary/index.js"></script>
+    <script src="../facts/skills/index.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -63,7 +64,11 @@
                         Summary.update(facts.summary)
                     }
 
-             
+                    if (facts.skills) {
+                        Skills.update(facts.skills)
+                    }
+
+
 
                     alert("Import successful!");
                 }
@@ -76,17 +81,29 @@
                     e.preventDefault();
 
                     const facts = {}
-                    facts.personal = {}
-                    facts.personal.first = Personal.first() || "",
-                        facts.personal.last = Personal.last() || "",
-                        facts.personal.city = Personal.city() || "",
-                        facts.contact = {}
-                    facts.contact.email = Contact.email() || "",
-                        facts.contact.linkedin = Contact.linkedin() || "",
-                        facts.contact.github = Contact.github() || "",
-                        facts.summary = {}
-                    facts.summary.title = Summary.title() || "";
-                    facts.summary.description = Summary.description() || "";
+                    facts.personal = {
+                        first: Personal.first() || "",
+                        last: Personal.last() || "",
+                        city: Personal.city() || "",
+
+                    }
+
+                    facts.contact = {
+                        email: Contact.email() || "",
+                        linkedin: Contact.linkedin() || "",
+                        github: Contact.github() || "",
+
+                    }
+
+                    facts.summary = {
+                        title: Summary.title() || "",
+                        description: Summary.description() || "",
+                    }
+
+                    
+                    facts.skills = Skills.all()
+          
+
                     facts.work = []
                     const filtered_work = Object.entries(localStorage).filter(([key, value]) =>
                         key.startsWith("work.")
@@ -107,16 +124,7 @@
                         facts.education.push(deserialized)
                     })
 
-                    facts.skills = []
-                    const filtered_skills = Object.entries(localStorage).filter(([key, value]) =>
-                        key.startsWith("skill.")
-                    );
-
-                    filtered_skills.forEach((entry) => {
-                        const deserialized = JSON.parse(entry[1]);
-
-                        facts.skills.push(deserialized)
-                    })
+          
 
                     document.forms.facts.elements.json.value = JSON.stringify(facts, null, 2);
                 }
