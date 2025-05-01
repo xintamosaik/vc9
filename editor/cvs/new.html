@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,18 +13,19 @@
     <script src="../facts/summary/index.js"></script>
     <link rel="stylesheet" href="../../shared.css">
 </head>
+
 <body>
     <nav>
-        <a href="../../">Home</a> > 
+        <a href="../../">Home</a> >
         <a href="../">Editor</a> >
         <a href="./">Cvs</a> >
-        Add | 
+        Add |
         <a href="../../preview" target="_blank" rel="noopener noreferrer">Preview</a>
     </nav>
 
     <main>
         <h1>
-            Add new CV  
+            Add new CV
         </h1>
         <p>
             Here we can add a new CV for a specific company or position.
@@ -39,28 +41,58 @@
 
             <input type="text" name="position" placeholder="Junior Software Engineer">
             <label for="position">Position</label>
-            
-            <!-- summary -->
+
             <label for="summary">Summary</label>
-            <textarea name="summary" rows="8" placeholder="I am a software engineer with a passion for building scalable and efficient systems."></textarea>
-       
-            <!-- work experience -->
+            <textarea name="summary" rows="8"
+                placeholder="I am a software engineer with a passion for building scalable and efficient systems."></textarea>
+
+            <template id="job">
+                <div class="job entry" style="display:flex; flex-direction: column;">
+
+
+                    <h2 class="title"></h2>
+                    <h3 class="company"></h3>
+                    <h4 class="city"></h4>
+                    <h5 class="start"></h5>
+                    <h5 class="end"></h5>
+
+                    <label for="description">
+                        Description
+                    </label>
+                    <textarea class="description" name="description" id="description" rows="8"></textarea>
+                </div>
+            </template>
             <output name="work"></output>
 
             <!-- education -->
+            <template id="education">
+                <div class="education entry" style="display:flex; flex-direction: column;">
+                    <h2 class="subject"></h2>
+                    <h3 class="degree"></h3>
+                    <h4 class="city"></h4>
+                    <h5 class="start"></h5>
+                    <h5 class="end"></h5>
+
+                    <label for="description">
+                        Description
+                    </label>
+                    <textarea class="description" name="description" id="description" rows="8"></textarea>
+                </div>
+            </template>
+
             <output name="education"></output>
 
             <!-- skills -->
             <output name="skills"></output>
 
         </form>
-  
-    
+
+
     </main>
 
     <script>
         const form = document.forms.cv;
-             
+
         const title = Summary.title() || "";
         form.elements.position.value = title;
 
@@ -71,12 +103,44 @@
 
         work.forEach(job => {
             console.log(job);
+            const clone = window.job.content.cloneNode(true);
+            const titleHTML = clone.querySelector('.title');
+            const companyHTML = clone.querySelector('.company');
+            const cityHTML = clone.querySelector('.city');
+            const startHTML = clone.querySelector('.start');
+            const endHTML = clone.querySelector('.end');
+            const descriptionHTML = clone.querySelector('.description');
+
+            titleHTML.textContent = job.title;
+            companyHTML.textContent = job.company;
+            cityHTML.textContent = job.city;
+            startHTML.textContent = job.start;
+            endHTML.textContent = job.end;
+            descriptionHTML.textContent = job.description;
+
+            form.elements.work.appendChild(clone);
         });
 
         const educations = Education.all();
 
         educations.forEach(education => {
-            console.log(education);
+            const clone = window.education.content.cloneNode(true);
+            const subjectHTML = clone.querySelector('.subject');
+            const degreeHTML = clone.querySelector('.degree');
+            const cityHTML = clone.querySelector('.city');
+            const startHTML = clone.querySelector('.start');
+            const endHTML = clone.querySelector('.end');
+            const descriptionHTML = clone.querySelector('.description');
+
+            subjectHTML.textContent = education.subject;
+            degreeHTML.textContent = education.degree;
+            cityHTML.textContent = education.city;
+            startHTML.textContent = education.start;
+            endHTML.textContent = education.end;
+            descriptionHTML.textContent = education.description;
+
+            form.elements.education.appendChild(clone);
+
         });
 
         const skills = Skills.all();
@@ -85,7 +149,8 @@
             console.log(skill);
         });
     </script>
-    
-    
+
+
 </body>
+
 </html>
