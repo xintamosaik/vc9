@@ -57,13 +57,13 @@
         }
 
         const skill = Skills.get(id)
-      
+
         const form = document.forms.skill
         form.elements.id.value = id
         form.elements.name.value = skill.name
         form.elements.level.value = skill.level
         form.elements.category.value = skill.category
-   
+
         form.onsubmit = (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
