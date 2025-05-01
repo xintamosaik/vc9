@@ -12,6 +12,7 @@
     <script src="../facts/summary/index.js"></script>
     <script src="../facts/skills/index.js"></script>
     <script src="../facts/work/index.js"></script>
+    <script src="../facts/education/index.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -75,6 +76,12 @@
                         })
                     }
 
+                    if (facts.education) {
+                        facts.education.forEach(education => {
+                            Education.update(education.id, education)
+                        })
+                    }
+
 
 
                     alert("Import successful!");
@@ -107,24 +114,15 @@
                         description: Summary.description() || "",
                     }
 
-                    
+
                     facts.skills = Skills.all()
-    
+
 
                     facts.work = Work.all()
-                     
 
-                    facts.education = [];
-                    const filtered_education = Object.entries(localStorage).filter(([key, value]) =>
-                        key.startsWith("education.")
-                    );
-                    filtered_education.forEach(entry => {
-                        const deserialized = JSON.parse(entry[1]);
 
-                        facts.education.push(deserialized)
-                    })
+                    facts.education = Education.all()
 
-          
 
                     document.forms.facts.elements.json.value = JSON.stringify(facts, null, 2);
                 }
