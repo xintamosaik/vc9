@@ -203,6 +203,16 @@
             form.elements.skills.appendChild(clone);
         });
 
+        // Do we have a cv id form the url?
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        console.log({ id })
+        if (id) {
+            const serialized = localStorage.getItem(`cv.${id}`);
+            const data = JSON.parse(serialized);
+            console.log({ data })
+        }
+
         form.addEventListener('submit', (event) => {
             event.preventDefault();
             const cv = event.target;
@@ -232,6 +242,28 @@
 
             const skills = Array.from(cv.elements.skills.querySelectorAll('.skill'));
             console.log({ skills })
+            const skillsData = skills.map(skill => {
+                const id = skill.dataset.id;
+                const active = skill.querySelector('.active').checked;
+                return { id, active }
+            })
+            console.log({ skillsData })
+            const timestamp = Date.now();
+            const data = {
+                id: timestamp,
+                sector,
+                company,
+                position,
+                summary,
+                work: jobsData,
+                education: educationsData,
+                skills: skillsData
+
+            }
+            console.log({ data })
+            const serialized = JSON.stringify(data);
+            localStorage.setItem(`cv.${timestamp}`, serialized);
+            window.location.href = `./`;
         });
 
 

@@ -24,13 +24,44 @@
             Here we can manage different drafts for diffrent companies or different positions.
         </p>
         <nav>
-            <ul>
-                <li>
-                    <a href="../cvs/new.html">Add new CV</a>
-                </li>
-             
-            </ul>
+            <a href="../cvs/edit.html">Add new CV</a>
         </nav>
+        <template id="cv-template">
+        
+                <a class="edit" href="./edit.html?id=">
+                    <span class="id"></span>
+                    <span class="sector"></span>
+                    <span class="company"></span>
+                </a>
+        
+        </template>
+        <output id="cvs"></output>
+
+        <script>
+            const output = document.getElementById('cvs');
+            const filtered = Object.entries(localStorage).filter(([key]) => 
+                key.startsWith("cv.")
+            );
+        
+            filtered.forEach(([key, value]) => {
+                
+                const clone = document.getElementById('cv-template').content.cloneNode(true);
+                const sector = clone.querySelector('.sector');
+                const company = clone.querySelector('.company');
+                const edit = clone.querySelector('.edit');
+                const id = clone.querySelector('.id');
+                const data = JSON.parse(value);
+                sector.textContent = data.sector
+                company.textContent = data.company
+                if (!data.sector || !data.company) {
+                    id.textContent = data.id;
+                }
+                edit.href += data.id;
+
+                output.appendChild(clone);
+            });
+        </script>
+
   
     
     </main>
