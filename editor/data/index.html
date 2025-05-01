@@ -11,6 +11,7 @@
     <script src="../facts/contact/index.js"></script>
     <script src="../facts/summary/index.js"></script>
     <script src="../facts/skills/index.js"></script>
+    <script src="../facts/work/index.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -68,6 +69,12 @@
                         Skills.update(facts.skills)
                     }
 
+                    if (facts.work) {
+                        facts.work.forEach(work => {
+                            Work.update(work.id, work)
+                        })
+                    }
+
 
 
                     alert("Import successful!");
@@ -102,17 +109,10 @@
 
                     
                     facts.skills = Skills.all()
-          
+    
 
-                    facts.work = []
-                    const filtered_work = Object.entries(localStorage).filter(([key, value]) =>
-                        key.startsWith("work.")
-                    );
-                    filtered_work.forEach(entry => {
-                        const deserialized = JSON.parse(entry[1]);
-
-                        facts.work.push(deserialized)
-                    })
+                    facts.work = Work.all()
+                     
 
                     facts.education = [];
                     const filtered_education = Object.entries(localStorage).filter(([key, value]) =>

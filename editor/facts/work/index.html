@@ -60,9 +60,7 @@
     <script>
         const filtered = Work.all()
 
-        filtered.forEach((entry) => {
-         
-     
+        filtered.forEach((entry) => { 
             const job = window.job.content.cloneNode(true);
             job.querySelector(".title").innerText = entry.title;
             job.querySelector(".company").innerText = entry.company;

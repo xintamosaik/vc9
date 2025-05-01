@@ -7,6 +7,8 @@
     <title>CV - Facts - Education - Edit</title>
 
     <script src="../../../shared.js"></script>
+    <script src="./index.js"></script>
+
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -69,23 +71,22 @@
             window.location = './'
         }
 
-        window.id.value = id;
-        const job = localStorage.getItem('education.' + id)
-        const deserialized = JSON.parse(job)
+    
+        const education = Education.get(id)
         const form = document.forms.education;
-
-        form.elements.subject.value = deserialized.subject;
-        form.elements.degree.value = deserialized.degree;
-        form.elements.city.value = deserialized.city;
-        form.elements.start.value = deserialized.start;
-        form.elements.end.value = deserialized.end;
-        form.elements.description.value = deserialized.description;
+        form.elements.id.value = id;
+        form.elements.subject.value = education.subject;
+        form.elements.degree.value = education.degree;
+        form.elements.city.value = education.city;
+        form.elements.start.value = education.start;
+        form.elements.end.value = education.end;
+        form.elements.description.value = education.description;
 
         form.onsubmit = (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
-            localStorage.setItem(`education.${id}`, JSON.stringify(data));
+            Education.update(id, data)
             window.location = "./"
         }
     </script>

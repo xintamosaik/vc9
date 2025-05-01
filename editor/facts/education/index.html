@@ -7,6 +7,8 @@
     <title>CV - Facts - Education</title>
 
     <script src="../../../shared.js"></script>
+    <script src="./index.js"></script>
+
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -57,25 +59,21 @@
     </main>
 
     <script>
-        const filtered = Object.entries(localStorage).filter(([key, value]) =>
-            key.startsWith("education.")
-        );
+        const educations = Education.all()
 
-        filtered.forEach((entry) => {
-            const deserialized = JSON.parse(entry[1]);
-            console.log(deserialized);
+        educations.forEach((education) => {
 
-            const education = window.education.content.cloneNode(true);
-            education.querySelector(".subject").innerText = deserialized.subject;
-            education.querySelector(".degree").innerText = deserialized.degree;
-            education.querySelector(".city").innerText = deserialized.city;
-            education.querySelector(".start").innerText = deserialized.start;
-            education.querySelector(".end").innerText = deserialized.end || "present";
+            const educationHTML = window.education.content.cloneNode(true);
+            educationHTML.querySelector(".subject").innerText = education.subject;
+            educationHTML.querySelector(".degree").innerText = education.degree;
+            educationHTML.querySelector(".city").innerText = education.city;
+            educationHTML.querySelector(".start").innerText = education.start;
+            educationHTML.querySelector(".end").innerText = education.end || "present";
 
-            education.querySelector(".edit").href += deserialized.id;
+            educationHTML.querySelector(".edit").href += education.id;
 
-            const removeButton = education.querySelector(".remove");
-            removeButton.value += deserialized.id;
+            const removeButton = educationHTML.querySelector(".remove");
+            removeButton.value += education.id;
 
             removeButton.onclick = () => {
                 const id = removeButton.value
@@ -85,12 +83,12 @@
                     return;
                 }
 
-                localStorage.removeItem("education." + id);
+                Education.remove(id)
 
                 window.location = "./"
             }
 
-            window.educations.appendChild(education);
+            window.educations.appendChild(educationHTML);
         });
     </script>
 </body>

@@ -7,6 +7,7 @@
     <title>CV - Facts - Work - Edit</title>
 
     <script src="../../../shared.js"></script>
+    <script src="./index.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -70,23 +71,22 @@
             window.location = './'
         }
 
-        window.id.value = id;
-        const job = localStorage.getItem('work.' + id)
-        const deserialized = JSON.parse(job)
+        
+        const job = Work.get(id)
         const form = document.forms.work;
-
-        form.elements.title.value = deserialized.title
-        form.elements.company.value = deserialized.company
-        form.elements.city.value = deserialized.city
-        form.elements.start.value = deserialized.start
-        form.elements.end.value = deserialized.end
-        form.elements.description.value = deserialized.description;
+        form.elements.id.value = id
+        form.elements.title.value = job.title
+        form.elements.company.value = job.company
+        form.elements.city.value = job.city
+        form.elements.start.value = job.start
+        form.elements.end.value = job.end
+        form.elements.description.value = job.description;
 
         form.onsubmit = (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
-            localStorage.setItem(`work.${id}`, JSON.stringify(data));
+            Work.update(id, data)
             window.location = "./"
         }
     </script>
