@@ -7,6 +7,7 @@
     <title>CV - Facts - Contact</title>
 
     <script src="../../../shared.js"></script>
+    <script src="./index.js"></script>
     <link rel="stylesheet" href="../../../shared.css" />
 </head>
 
@@ -27,19 +28,14 @@
             }
 
             const email = urlParams.get("email");
-            if (email) {
-                localStorage.setItem("contact.email", email);
-            }
-
             const linkedin = urlParams.get("linkedin");
-            if (linkedin) {
-                localStorage.setItem("contact.linkedin", linkedin);
-            }
-
             const github = urlParams.get("github");
-            if (github) {
-                localStorage.setItem("contact.github", github);
-            }
+
+            Contact.update({
+                email: email,
+                linkedin: linkedin,
+                github: github
+            })
 
             if (email || linkedin || github) {
                 window.location.href = "./?update";
@@ -73,9 +69,9 @@
         </form>
     </main>
     <script>
-        window.email.value = localStorage.getItem("contact.email") || "";
-        window.linkedin.value = localStorage.getItem("contact.linkedin") || "";
-        window.github.value = localStorage.getItem("contact.github") || "";
+        window.email.value = Contact.email() || "";
+        window.linkedin.value = Contact.linkedin() || "";
+        window.github.value = Contact.github() || "";
     </script>
 </body>
 
