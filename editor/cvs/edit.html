@@ -7,6 +7,7 @@
     <title>CV - Drafts</title>
 
     <script src="../../shared.js"></script>
+    <script src="../cvs/index.js"></script>
     <script src="../facts/work/index.js"></script>
     <script src="../facts/education/index.js"></script>
     <script src="../facts/skills/index.js"></script>
@@ -68,18 +69,28 @@
             console.log({ data })
             const serialized = JSON.stringify(data);
             localStorage.setItem(`cv.${id ? id : timestamp}`, serialized);
-
+1
+            return id ? id : timestamp;
 
         }
 
+        function previewCV(event) {
+            event.preventDefault();
+            const cv = document.forms.cv;
+            const id = update(cv);
+            const newLocation = new URL('../../preview/index.html', window.location.href);
+            newLocation.searchParams.set('id', id);
+            console.log({ newLocation: newLocation.toString() })
+            window.location.href = newLocation.toString();
+        }
 
         function saveCV(event) {
             event.preventDefault();
             const cv = document.forms.cv;
-            
+
             update(cv);
-            window.success.showModal()
-        
+           
+
         }
         function saveCVAndReturn(event) {
             event.preventDefault();
@@ -98,7 +109,9 @@
         <a href="../../">Home</a> >
         <a href="../">Editor</a> >
         <a href="./">Cvs</a> >
-        Add | Save to preview
+        <span>Add</span>
+        |
+        <a id="preview" onclick="previewCV(event)">Save & Preview</a>
 
     </nav>
 
@@ -215,6 +228,7 @@
     </main>
 
     <script>
+
         const form = document.forms.cv;
 
         const title = Summary.title() || "";
@@ -287,14 +301,18 @@
             form.elements.skills.appendChild(clone);
         });
 
-        // Do we have a cv id form the url?
+        /**
+         * Load the specific cv form the url parameter (if any)
+         */
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
-        console.log({ id })
+
+
+
         if (id) {
-            const serialized = localStorage.getItem(`cv.${id}`);
+            const serialized = CV.load(id);
             const data = JSON.parse(serialized);
-            console.log({ data })
+
 
             if (data.sector) {
                 form.elements.sector.value = data.sector;
@@ -313,18 +331,37 @@
             }
 
             const jobs = data.work;
-            console.log({ jobs })
-
             jobs.forEach(job => {
-                console.log({ job })
+                if (!job.id) return;
+                if (!job.description) return;
                 const id = job.id;
                 const jobHTML = form.elements.work.querySelector(`[data-id="${id}"]`);
-                console.log({ jobHTML })
                 const descriptionHTML = jobHTML.querySelector('.description');
-                console.log({ descriptionHTML })
-                console.log(job.description)
+
                 descriptionHTML.value = job.description;
 
+            });
+
+            const educations = data.education;
+            educations.forEach(education => {
+                if (!education.id) return;
+                if (!education.description) return;
+                const id = education.id;
+                const educationHTML = form.elements.education.querySelector(`[data-id="${id}"]`);
+                const descriptionHTML = educationHTML.querySelector('.description');
+
+                descriptionHTML.value = education.description;
+            });
+
+            const skills = data.skills;
+            skills.forEach(skill => {
+                if (!skill.id) return;
+                if (skill.active === undefined) return;
+                const id = skill.id;
+                const skillHTML = form.elements.skills.querySelector(`[data-id="${id}"]`);
+                const activeHTML = skillHTML.querySelector('.active');
+
+                activeHTML.checked = skill.active;
             });
 
         }
