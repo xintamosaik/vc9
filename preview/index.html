@@ -11,6 +11,7 @@
     <script src="../editor/facts/skills/index.js"></script>
     <script src="../editor/facts/summary/index.js"></script>
     <script src="../editor/facts/work/index.js"></script>
+    <script src="../editor/cvs/index.js"></script>
     <link rel="stylesheet" href="../shared.css" />
     <style>
         .dash::before {
@@ -283,8 +284,6 @@
 
                 filtered_skills.forEach((entry) => {
 
-                    console.log(entry);
-
                     const skill = window.skill.content.cloneNode(true);
                     const name = entry.name;
                     const name_html = skill.querySelector(".name");
@@ -376,13 +375,10 @@
             <script>
                // If we have an id in the url (GET parameter), we want to overwrite parts of the education section.
                const url = new URL(window.location.href);
-               const id = url.searchParams.get("id");
-               console.log("url")
-               console.log({ url })
-
-               console.log({ id })  
+               const id = url.searchParams.get("id"); 
+                    
                if (id) {
-                const cv = localStorage.getItem("cv."+id);
+                const cv = CV.load(id);
                 console.log(cv);
                }
             </script>

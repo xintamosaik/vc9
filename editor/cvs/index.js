@@ -221,7 +221,7 @@
 const CV = {
 
     load: function (id) {
-        return localStorage.getItem("cv." + id);
+        return JSON.parse(localStorage.getItem("cv." + id));
     },
 
     save: function (cv, id) {
