@@ -5,17 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Preview</title>
+    <script src="../editor/facts/contact/index.js"></script>
+    <script src="../editor/facts/education/index.js"></script>
+    <script src="../editor/facts/personal/index.js"></script>
+    <script src="../editor/facts/skills/index.js"></script>
+    <script src="../editor/facts/summary/index.js"></script>
+    <script src="../editor/facts/work/index.js"></script>
     <link rel="stylesheet" href="../shared.css" />
     <style>
         .dash::before {
             content: "•";
         }
-        body{
+
+        body {
             font-family: sans-serif;
         }
+
         aside,
         main {
             max-width: 210mm;
+        }
+
+        ul {
+            margin-left: 5mm;
+        }
+
+        ul li {
+            list-style: disc;
         }
 
         @media print {
@@ -23,6 +39,7 @@
                 size: A4;
                 margin: 0;
             }
+
             aside {
                 display: none;
             }
@@ -32,10 +49,11 @@
                 background-color: white;
                 color: black;
                 font-size: 11pt;
-         
+
                 margin: 0;
                 padding: 0;
             }
+
             main {
                 padding-top: 10mm;
                 padding-left: 20mm;
@@ -43,7 +61,10 @@
                 padding-bottom: 15mm;
             }
 
-            h1, h2, h3, h4 {
+            h1,
+            h2,
+            h3,
+            h4 {
                 margin-bottom: 0;
                 page-break-after: avoid;
             }
@@ -70,7 +91,35 @@
             }
         }
     </style>
- 
+    <script>
+        function splitByLineFeed(text) {
+            if (!text) return '';
+            return text.split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0);
+        }
+        function ListItem(text) {
+            const li = document.createElement('li');
+            li.innerText = text;
+            return li;
+        }
+        function appendList(container, splitted) {
+            const ul = document.createElement('ul');
+            splitted.forEach(line => {
+                ul.appendChild(ListItem(line));
+            });
+            container.appendChild(ul);
+
+        }
+
+        function appendText(container, text) {
+            const p = document.createElement('p');
+            p.innerText = text;
+            container.appendChild(p);
+        }
+
+    </script>
+
 </head>
 
 <body>
@@ -88,12 +137,12 @@
                 <span id="summary_title"></span>
             </h1>
             <script id="script_title">
-                const first = localStorage.getItem("personal.first").trim() || "";
-                const last = localStorage.getItem("personal.last").trim() || "";
+                const first = Personal.first();
+                const last = Personal.last();
                 const full = (first && last) ? first + " " + last : "(please add your name to the personal section)";
                 window.personal_name.innerText = full;
 
-                const title = localStorage.getItem("summary.title").trim() || "";
+                const title = Summary.title();
                 window.summary_title.innerText = title;
 
             </script>
@@ -120,17 +169,17 @@
             <span class="dash"></span>
             <span id="personal_city"></span>
             <script id="script_contact">
-                const email = localStorage.getItem("contact.email").trim() || "";
+                const email = Contact.email();
                 window.contact_email.href = `mailto:${email}`;
                 window.contact_email.innerText = email;
 
-                const linkedin = localStorage.getItem("contact.linkedin").trim() || "";
+                const linkedin = Contact.linkedin();
                 window.contact_linkedin.href = linkedin;
 
-                const github = localStorage.getItem("contact.github").trim() || "";
+                const github = Contact.github();
                 window.contact_github.href = github;
 
-                const city = localStorage.getItem("personal.city").trim() || "";
+                const city = Personal.city();
                 window.personal_city.innerText = city;
             </script>
         </section>
@@ -143,7 +192,7 @@
 
             </p>
             <script id="script_summary">
-                const summary = localStorage.getItem("summary.description").trim() || "";
+                const summary = Summary.description();
                 window.summary_text.innerText = summary;
 
             </script>
@@ -167,44 +216,48 @@
                     </h4>
 
 
-                    <p class="description">
+                    <div class="description">
 
-                    </p>
+                    </div>
 
                 </div>
             </template>
 
             <script id="script_experience">
-                const filtered_work = Object.entries(localStorage).filter(([key, value]) =>
-                    key.startsWith("work.")
-                );
+                const filtered_work = Work.all();
 
                 filtered_work.forEach((entry) => {
-                    const deserialized = JSON.parse(entry[1]);
+
 
                     const job = window.job.content.cloneNode(true);
 
-                    const title = deserialized.title;
+                    const title = entry.title;
                     const title_html = job.querySelector(".title");
                     title_html.innerText = title;
 
-                    const company = deserialized.company;
+                    const company = entry.company;
                     const company_html = job.querySelector(".company");
                     company_html.innerText = company;
 
-                    const city = deserialized.city;
+                    const city = entry.city;
                     const city_html = job.querySelector(".city");
                     city_html.innerText = city;
 
-                    const start = deserialized.start;
-                    const end = deserialized.end || "present";
+                    const start = entry.start;
+                    const end = entry.end || "present";
                     const date = start + " - " + end;
                     const date_html = job.querySelector(".date");
                     date_html.innerText = date;
 
-                    const description = deserialized.description;
+                    const description = entry.description;
+
                     const description_html = job.querySelector(".description")
-                    description_html.innerText = description;
+                    const splitted = splitByLineFeed(description);
+                    if (splitted.length > 1) {
+                        appendList(description_html, splitted);
+                    } else {
+                        appendText(description_html, description);
+                    }
 
                     window.experience.appendChild(job);
                 }); 
@@ -226,20 +279,18 @@
                 </div>
             </template>
             <script id="script_skills">
-                const filtered_skills = Object.entries(localStorage).filter(([key, value]) =>
-                    key.startsWith("skill.")
-                );
+                const filtered_skills = Skills.all();
 
                 filtered_skills.forEach((entry) => {
-                    const deserialized = JSON.parse(entry[1]);
-                    console.log(deserialized);
+
+                    console.log(entry);
 
                     const skill = window.skill.content.cloneNode(true);
-                    const name = deserialized.name;
+                    const name = entry.name;
                     const name_html = skill.querySelector(".name");
                     name_html.innerText = name;
 
-                    const level = deserialized.level;
+                    const level = entry.level;
                     let level_category = "beginner";
                     if (level > 66) {
                         level_category = "expert";
@@ -283,36 +334,39 @@
                 </div>
             </template>
             <script id="script_education">
-                const filtered_education = Object.entries(localStorage).filter(([key, value]) =>
-                    key.startsWith("education.")
-                );
+                const filtered_education = Education.all();
 
                 filtered_education.forEach((entry) => {
-                    const deserialized = JSON.parse(entry[1]);
-            
+
+
 
                     const education = window.education.content.cloneNode(true);
-                    const subject = deserialized.subject;
+                    const subject = entry.subject;
                     const subject_html = education.querySelector(".subject");
                     subject_html.innerText = subject;
 
-                    const degree = deserialized.degree;
+                    const degree = entry.degree;
                     const degree_html = education.querySelector(".degree");
                     degree_html.innerText = degree;
 
-                    const city = deserialized.city;
+                    const city = entry.city;
                     const city_html = education.querySelector(".city");
                     city_html.innerText = city;
 
-                    const start = deserialized.start;
-                    const end = deserialized.end || "present";
+                    const start = entry.start;
+                    const end = entry.end || "present";
                     const date = start + " - " + end;
                     const date_html = education.querySelector(".date");
                     date_html.innerText = date;
 
-                    const description = deserialized.description;
+                    const description = entry.description;
                     const description_html = education.querySelector(".description")
-                    description_html.innerText = description;
+                    const splitted = splitByLineFeed(description);
+                    if (splitted.length > 1) {
+                        appendList(description_html, splitted);
+                    } else {
+                        appendText(description_html, description);
+                    }
 
 
                     window.educations.appendChild(education);
