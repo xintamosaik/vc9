@@ -78,7 +78,8 @@
             const cv = document.forms.cv;
             
             update(cv);
-            showSuccess("Saved!");
+            window.success.showModal()
+        
         }
         function saveCVAndReturn(event) {
             event.preventDefault();
@@ -199,6 +200,11 @@
             </template>
             <h2>Skills</h2>
             <output name="skills" style="display: flex; flex-direction: column;"></output>
+
+            <dialog id="success">
+                <p class="message">Saved!</p>
+                <button class="close" type="button" onclick="window.success.close()">Close</button>
+            </dialog>
 
             <button id="save" type="button" onclick="saveCV(event)">Save</button>
             <button id="submit" type="submit">Save & Return</button>

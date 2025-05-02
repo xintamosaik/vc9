@@ -12,35 +12,7 @@
 </head>
 
 <body>
-    <script>
-        // before we do anything we check if there are get parameters
-        (function handleParams() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.size === 0) {
-                return;
-            }
 
-            if (urlParams.has("update")) {
-                showSuccess("Your Summary has been updated. Click to dismiss.");
-
-                window.history.replaceState({}, document.title, "./");
-                return;
-            }
-
-            const title = urlParams.get("title");
-            const description = urlParams.get("description");
-           
-            Summary.update({
-                title: title,
-                description: description
-            })
-
-
-            if (title || description) {
-                window.location.href = "./?update";
-            }
-        })();
-    </script>
     <nav>
         <a href="../../../">Home</a> > <a href="../../">Editor</a> >
         <a href="../">Facts</a> > Summary |
@@ -52,7 +24,7 @@
     <main>
         <h1>Summary</h1>
 
-        <form action="./index.html" method="get">
+        <form action="./" method="get" onsubmit="handleSubmit(event)">
             <input type="text" id="title" name="title" placeholder="Software Engineer" required />
             <label for="first">Title</label>
 
@@ -63,14 +35,25 @@
 
 
             <br />
-
+            <dialog id="success">
+                <p class="message">Saved!</p>
+                <button class="close" type="button" onclick="window.success.close()">Close</button>
+                <button class="close" type="button" onclick="window.location.href = '../'">Return</button>
+            </dialog>
             <button type="submit">Update</button>
         </form>
     </main>
     <script>
         window.title.value = Summary.title() || "";
         window.description.value = Summary.description() || "";
-
+        function handleSubmit(event) {
+            event.preventDefault()
+            Summary.update({
+                title: window.title.value,
+                description: window.description.value
+            })
+            window.success.showModal()
+        }
     </script>
 </body>
 

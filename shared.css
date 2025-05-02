@@ -21,7 +21,7 @@ body {
 }
 
 /*all body elements will be maxxed at 60ch*/
-body > * {
+body>* {
   max-width: 60ch;
   width: 100%;
 }
@@ -37,6 +37,7 @@ nav ul li a {
   display: block;
   padding: 1rem 0;
 }
+
 /* We do not want underline on links until we hover */
 a {
   text-decoration: none;
@@ -53,6 +54,7 @@ form {
   flex-direction: column;
   gap: 1ch;
 }
+
 textarea,
 input {
   background-color: var(--color-dark-bg);
@@ -92,6 +94,7 @@ button {
   padding: 1ch 2ch;
   font-family: var(--font);
 }
+
 button:focus,
 button:hover {
   background-color: var(--color-dark-link);
@@ -101,10 +104,22 @@ button:hover {
 }
 
 
-.success {
-  display: none;
+dialog#success {
+  box-sizing: border-box;
   flex-direction: column;
-  padding: 2rem 0;
+  gap: 1rem;
 
+  background-color: var(--color-dark-bg);
+  color: var(--color-dark-fg);
+  padding: 2rem;
+  width: min(60ch, 90vw);
 }
 
+dialog#success:open {
+  display: flex;
+}
+
+dialog#success::backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+}

@@ -114,15 +114,9 @@
                         description: Summary.description() || "",
                     }
 
-
                     facts.skills = Skills.all()
-
-
                     facts.work = Work.all()
-
-
                     facts.education = Education.all()
-
 
                     document.forms.facts.elements.json.value = JSON.stringify(facts, null, 2);
                 }
