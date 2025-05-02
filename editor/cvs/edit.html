@@ -14,6 +14,82 @@
 
 
     <link rel="stylesheet" href="../../shared.css">
+    <script>
+        function update(cv) {
+            const sector = cv.elements.sector.value;
+            const company = cv.elements.company.value;
+            const position = cv.elements.position.value;
+            const summary = cv.elements.summary.value;
+            console.log({ sector, company, position, summary })
+
+            const jobs = Array.from(cv.elements.work.querySelectorAll('.job'));
+            const jobsData = jobs.map(job => {
+                const id = job.dataset.id;
+                const descriptionHTML = job.querySelector('.description');
+                console.log({ descriptionHTML })
+                const description = descriptionHTML.value;
+                console.log({ description })
+
+
+                console.log({ id, description })
+                return { id, description }
+            })
+            console.log({ jobsData })
+
+            const educations = Array.from(cv.elements.education.querySelectorAll('.education'));
+            const educationsData = educations.map(education => {
+
+                const id = education.dataset.id;
+                const description = education.querySelector('.description').value;
+                return { id, description }
+            })
+            console.log({ educationsData })
+
+            const skills = Array.from(cv.elements.skills.querySelectorAll('.skill'));
+            console.log({ skills })
+            const skillsData = skills.map(skill => {
+                const id = skill.dataset.id;
+                const active = skill.querySelector('.active').checked;
+                return { id, active }
+            })
+            console.log({ skillsData })
+            const timestamp = Date.now();
+            const data = {
+                id: id ? id : `${timestamp}`,
+                sector,
+                company,
+                position,
+                summary,
+                work: jobsData,
+                education: educationsData,
+                skills: skillsData
+
+            }
+            console.log({ data })
+            const serialized = JSON.stringify(data);
+            localStorage.setItem(`cv.${id ? id : timestamp}`, serialized);
+
+
+        }
+
+
+        function saveCV(event) {
+            event.preventDefault();
+            const cv = document.forms.cv;
+            
+            update(cv);
+            showSuccess("Saved!");
+        }
+        function saveCVAndReturn(event) {
+            event.preventDefault();
+            const cv = document.forms.cv;
+
+            update(cv);
+            window.location.href = `./`;
+        }
+
+
+    </script>
 </head>
 
 <body>
@@ -32,7 +108,7 @@
         <p>
             Here we can add a new CV for a specific company or position.
         </p>
-        <form id="cv" action="./" method="get">
+        <form id="cv" action="./" method="get" onsubmit="saveCVAndReturn(event)">
             <input type="hidden" name="id" value="">
 
             <input type="text" name="sector" id="sector" placeholder="Fintech">
@@ -41,7 +117,7 @@
             <br />
 
             <input type="text" name="company" id="company" placeholder="Google">
-            <label for="position">Company</label>
+            <label for="company">Company</label>
 
             <br />
 
@@ -124,7 +200,9 @@
             <h2>Skills</h2>
             <output name="skills" style="display: flex; flex-direction: column;"></output>
 
-            <button type="submit">Save</button>
+            <button id="save" type="button" onclick="saveCV(event)">Save</button>
+            <button id="submit" type="submit">Save & Return</button>
+
         </form>
 
 
@@ -244,65 +322,6 @@
             });
 
         }
-
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const cv = event.target;
-
-            const sector = cv.elements.sector.value;
-            const company = cv.elements.company.value;
-            const position = cv.elements.position.value;
-            const summary = cv.elements.summary.value;
-            console.log({ sector, company, position, summary })
-
-            const jobs = Array.from(cv.elements.work.querySelectorAll('.job'));
-            const jobsData = jobs.map(job => {
-                const id = job.dataset.id;
-                const descriptionHTML = job.querySelector('.description');
-                console.log({ descriptionHTML })
-                const description = descriptionHTML.value;
-                console.log({ description })
-
-
-                console.log({ id, description })
-                return { id, description }
-            })
-            console.log({ jobsData })
-
-            const educations = Array.from(cv.elements.education.querySelectorAll('.education'));
-            const educationsData = educations.map(education => {
-
-                const id = education.dataset.id;
-                const description = education.querySelector('.description').value;
-                return { id, description }
-            })
-            console.log({ educationsData })
-
-            const skills = Array.from(cv.elements.skills.querySelectorAll('.skill'));
-            console.log({ skills })
-            const skillsData = skills.map(skill => {
-                const id = skill.dataset.id;
-                const active = skill.querySelector('.active').checked;
-                return { id, active }
-            })
-            console.log({ skillsData })
-            const timestamp = Date.now();
-            const data = {
-                id: id ? id : `${timestamp}`,
-                sector,
-                company,
-                position,
-                summary,
-                work: jobsData,
-                education: educationsData,
-                skills: skillsData
-
-            }
-            console.log({ data })
-            const serialized = JSON.stringify(data);
-            localStorage.setItem(`cv.${id ? id : timestamp}`, serialized);
-            window.location.href = `./`;
-        });
 
 
     </script>

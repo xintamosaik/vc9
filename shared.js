@@ -10,6 +10,10 @@ function showSuccess(msg) {
   notification.style.flexDirection = "column";
 
   notification.style.padding = "2rem 0";
+  notification.style.position = "fixed";
+  notification.style.bottom = "1rem";
+ 
+
 
   const button = document.createElement("button");
   button.innerText = msg || "Success! Click to dismiss.";
@@ -23,5 +27,4 @@ function showSuccess(msg) {
   document.body.appendChild(notification);
 
 }
-
 

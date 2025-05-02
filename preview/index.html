@@ -373,6 +373,16 @@
                 });
             </script>
 
+            <script>
+               // If we have an id in the url (GET parameter), we want to overwrite parts of the education section.
+               const url = new URL(window.location.href);
+               const id = url.searchParams.get("id");
+               if (id) {
+                const cv = localStorage.getItem("cv."+id);
+                console.log(cv);
+               }
+            </script>
+
         </section>
 
     </main>
