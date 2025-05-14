@@ -5,6 +5,7 @@ const Education = {
      * @param {string} education.subject
      * @param {string} education.degree
      * @param {string} education.city
+     * @param {string} education.institution
      * @param {string} education.start
      * @param {string} education.end
      * @param {string} education.description
@@ -13,6 +14,7 @@ const Education = {
         if (!education || typeof education !== 'object') return false;
         if (!this.isValidString(education.subject)) return false;
         if (!this.isValidString(education.degree)) return false;
+        if (!this.isValidString(education.institution)) return false;
         if (!this.isValidString(education.city)) return false;
         if (!this.isValidString(education.start)) return false;
         if (!this.isValidString(education.end)) return false;
@@ -73,6 +75,7 @@ const Education = {
      * @param {string} education.subject
      * @param {string} education.degree
      * @param {string} education.city
+     * @param {string} education.institution
      * @param {string} education.start
      * @param {string} education.end
      * @param {string} education.description
@@ -88,6 +91,7 @@ const Education = {
             subject: education.subject.trim(),
             degree: education.degree.trim(),
             city: education.city.trim(),
+            institution: education.institution.trim(),
             start: education.start.trim(),
             end: education.end.trim(),
             description: education.description.trim(),
@@ -119,6 +123,7 @@ const Education = {
      * @param {string} education.subject
      * @param {string} education.degree
      * @param {string} education.city
+     * @param {string} education.institution
      * @param {string} education.start
      * @param {string} education.end
      * @param {string} education.description
@@ -137,6 +142,7 @@ const Education = {
             subject: education.subject.trim(),
             degree: education.degree.trim(),
             city: education.city.trim(),
+            institution: education.institution.trim(),
             start: education.start.trim(),
             end: education.end.trim(),
             description: education.description.trim(),

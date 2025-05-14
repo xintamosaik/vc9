@@ -89,20 +89,19 @@
     </style>
     <script src="index.js"></script>
     <script>
-        /**
-         * Shortens a date in the format YYYY-MM-DD to a more readable format. (MM/YYYY)
-         * @param {string} date - The date string in the format YYYY-MM-DD.
-         */
-        function shortenDate(date) {
-            const parts = date.split("-");
-            if (parts.length === 3) {
-                return parts[1] + "/" + parts[0];
-            } else {
-                return date;
-            }
+      /**
+       * Shortens a date in the format YYYY-MM-DD to a more readable format. (MM/YYYY)
+       * @param {string} date - The date string in the format YYYY-MM-DD.
+       */
+      function shortenDate(date) {
+        const parts = date.split("-");
+        if (parts.length === 3) {
+          return parts[1] + "/" + parts[0];
+        } else {
+          return date;
         }
+      }
     </script>
- 
   </head>
 
   <body>
@@ -127,7 +126,7 @@
               : "(please add your name to the personal section)";
           window.personal_name.innerText = full;
 
-          window.summary_title.innerText =  Summary.title()
+          window.summary_title.innerText = Summary.title();
         </script>
       </section>
 
@@ -193,7 +192,6 @@
           filtered_work.forEach((entry) => {
             const job = window.job.content.cloneNode(true);
 
-            
             const title_html = job.querySelector(".title");
             title_html.innerText = entry.title;
 
@@ -205,7 +203,7 @@
             city_html.innerText = entry.city;
 
             const start = shortenDate(entry.start);
-            const end =shortenDate( entry.end) || "present";
+            const end = shortenDate(entry.end) || "present";
             const date = start + " - " + end;
             const date_html = job.querySelector(".date");
             date_html.innerText = date;
@@ -218,8 +216,6 @@
         </script>
       </section>
 
-
-
       <!-- EDUCATION -->
 
       <section id="educations">
@@ -229,7 +225,7 @@
             <h3>
               <span class="subject"></span>
               <span class="dash"></span>
-              <span class="university"></span>
+              <span class="institution"></span>
             </h3>
             <h4>
               <span class="date"></span>
@@ -249,37 +245,40 @@
             const education = window.education.content.cloneNode(true);
 
             const subject_html = education.querySelector(".subject");
-            subject_html.innerText =  entry.subject;
- 
+            subject_html.innerText = entry.subject;
+
             const degree_html = education.querySelector(".degree");
             degree_html.innerText = entry.degree;
- 
+
             const city_html = education.querySelector(".city");
             city_html.innerText = entry.city;
+
+            const institution_html = education.querySelector(".institution");
+            institution_html.innerText = entry.institution;
 
             // const start = shortenDate(entry.start)
             const end = shortenDate(entry.end) || "present";
             // const date = start + " - " + end;
             const date_html = education.querySelector(".date");
             date_html.innerText = "Finished " + end;
- 
+
             const description_html = education.querySelector(".description");
-            description_html.innerHTML = convert( entry.description);
+            description_html.innerHTML = convert(entry.description);
 
             window.educations.appendChild(education);
           });
         </script>
 
-              <!-- SKILLS -->
+        <!-- SKILLS -->
 
-      <section id="skills">
-        <h2>Skills</h2>
-        <div id="skill_list"></div>
+        <section id="skills">
+          <h2>Skills</h2>
+          <div id="skill_list"></div>
 
-        <script id="script_skills">
-          window.skill_list.innerHTML = convert(Skills.text());
-        </script>
-      </section>
+          <script id="script_skills">
+            window.skill_list.innerHTML = convert(Skills.text());
+          </script>
+        </section>
 
         <script>
           // If we have an id in the url (GET parameter), we want to overwrite parts of the education section.
