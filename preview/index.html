@@ -203,7 +203,7 @@
             city_html.innerText = entry.city;
 
             const start = shortenDate(entry.start);
-            const end = shortenDate(entry.end) || "present";
+            const end = entry.end ? shortenDate(entry.end) : "present";
             const date = start + " - " + end;
             const date_html = job.querySelector(".date");
             date_html.innerText = date;
@@ -256,11 +256,9 @@
             const institution_html = education.querySelector(".institution");
             institution_html.innerText = entry.institution;
 
-            // const start = shortenDate(entry.start)
-            const end = shortenDate(entry.end) || "present";
             // const date = start + " - " + end;
             const date_html = education.querySelector(".date");
-            date_html.innerText = "Finished " + end;
+            date_html.innerText =  entry.end ? "Finished " + shortenDate(entry.end) : "currently studying";
 
             const description_html = education.querySelector(".description");
             description_html.innerHTML = convert(entry.description);
