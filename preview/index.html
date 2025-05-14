@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CV Preview</title>
     <script src="../editor/facts/contact/index.js"></script>
     <script src="../editor/facts/education/index.js"></script>
@@ -14,381 +13,322 @@
     <script src="../editor/cvs/index.js"></script>
     <link rel="stylesheet" href="../shared.css" />
     <style>
-        .dash::before {
-            content: "•";
+      .dash::before {
+        content: "•";
+      }
+
+      body {
+        font-family: sans-serif;
+      }
+
+      aside,
+      main {
+        max-width: 210mm;
+      }
+
+      ul {
+        margin-left: 5mm;
+      }
+
+      ul li {
+        list-style: disc;
+      }
+
+      @media print {
+        page {
+          size: A4;
+          margin: 0;
+        }
+
+        aside {
+          display: none;
         }
 
         body {
-            font-family: sans-serif;
+          display: block;
+          background-color: white;
+          color: black;
+          font-size: 11pt;
+
+          margin: 0;
+          padding: 0;
         }
 
-        aside,
         main {
-            max-width: 210mm;
+          padding-top: 10mm;
+          padding-left: 20mm;
+          padding-right: 20mm;
+          padding-bottom: 15mm;
         }
 
-        ul {
-            margin-left: 5mm;
+        h1,
+        h2,
+        h3,
+        h4 {
+          margin-bottom: 0;
+          page-break-after: avoid;
         }
 
-        ul li {
-            list-style: disc;
+        h1 {
+          font-size: 20pt;
         }
 
-        @media print {
-            page {
-                size: A4;
-                margin: 0;
-            }
-
-            aside {
-                display: none;
-            }
-
-            body {
-                display: block;
-                background-color: white;
-                color: black;
-                font-size: 11pt;
-
-                margin: 0;
-                padding: 0;
-            }
-
-            main {
-                padding-top: 10mm;
-                padding-left: 20mm;
-                padding-right: 20mm;
-                padding-bottom: 15mm;
-            }
-
-            h1,
-            h2,
-            h3,
-            h4 {
-                margin-bottom: 0;
-                page-break-after: avoid;
-            }
-
-            h1 {
-                font-size: 20pt;
-            }
-
-            h2 {
-                font-size: 16pt;
-                margin-top: 1em;
-            }
-
-            a {
-                color: blue;
-            }
-
-            section {
-                page-break-inside: avoid;
-            }
-
-            .entry {
-                page-break-inside: avoid;
-            }
+        h2 {
+          font-size: 16pt;
+          margin-top: 1em;
         }
+
+        a {
+          color: blue;
+        }
+
+        section {
+          page-break-inside: avoid;
+        }
+
+        .entry {
+          page-break-inside: avoid;
+        }
+      }
     </style>
+    <script src="index.js"></script>
     <script>
-        function splitByLineFeed(text) {
-            if (!text) return '';
-            return text.split('\n')
-                .map(line => line.trim())
-                .filter(line => line.length > 0);
-        }
-        function ListItem(text) {
-            const li = document.createElement('li');
-            li.innerText = text;
-            return li;
-        }
-        function appendList(container, splitted) {
-            const ul = document.createElement('ul');
-            splitted.forEach(line => {
-                ul.appendChild(ListItem(line));
-            });
-            container.appendChild(ul);
-
-        }
-
-        function appendText(container, text) {
-            const p = document.createElement('p');
-            p.innerText = text;
-            container.appendChild(p);
-        }
-
+      function appendText(container, text) {
+        const p = document.createElement("p");
+        p.innerText = text;
+        container.appendChild(p);
+      }
     </script>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <aside>
-        <nav>
-            <a href="../editor" target="_blank">Editor</a>
-        </nav>
+      <nav>
+        <a href="../editor" target="_blank">Editor</a>
+      </nav>
     </aside>
     <main>
+      <section id="title">
+        <h1>
+          <span id="personal_name"></span>
+          <span class="dash"></span>
+          <span id="summary_title"></span>
+        </h1>
+        <script id="script_title">
+          const first = Personal.first();
+          const last = Personal.last();
+          const full =
+            first && last
+              ? first + " " + last
+              : "(please add your name to the personal section)";
+          window.personal_name.innerText = full;
 
-        <section id="title">
-            <h1>
-                <span id="personal_name"></span>
-                <span class="dash"></span>
-                <span id="summary_title"></span>
-            </h1>
-            <script id="script_title">
-                const first = Personal.first();
-                const last = Personal.last();
-                const full = (first && last) ? first + " " + last : "(please add your name to the personal section)";
-                window.personal_name.innerText = full;
+          const title = Summary.title();
+          window.summary_title.innerText = title;
+        </script>
+      </section>
 
-                const title = Summary.title();
-                window.summary_title.innerText = title;
+      <section id="contact">
+        <span>
+          <a id="contact_linkedin" target="_blank"> LinkedIn </a>
+        </span>
+        <span class="dash"></span>
+        <span>
+          <a id="contact_email"> Email </a>
+        </span>
+        <span class="dash"></span>
+        <span>
+          <a id="contact_github" target="_blank"> GitHub </a>
+        </span>
+        <span class="dash"></span>
+        <span id="personal_city"></span>
+        <script id="script_contact">
+          const email = Contact.email();
+          window.contact_email.href = `mailto:${email}`;
+          window.contact_email.innerText = email;
 
-            </script>
-        </section>
+     
+          window.contact_linkedin.href = Contact.linkedin();;
 
-        <section id="contact">
-            <span>
-                <a id="contact_linkedin" target="_blank">
-                    LinkedIn
-                </a>
-            </span>
-            <span class="dash"></span>
-            <span>
-                <a id="contact_email">
-                    Email
-                </a>
-            </span>
-            <span class="dash"></span>
-            <span>
-                <a id="contact_github" target="_blank">
-                    GitHub
-                </a>
-            </span>
-            <span class="dash"></span>
-            <span id="personal_city"></span>
-            <script id="script_contact">
-                const email = Contact.email();
-                window.contact_email.href = `mailto:${email}`;
-                window.contact_email.innerText = email;
+          const github = Contact.github();
+          window.contact_github.href = github;
 
-                const linkedin = Contact.linkedin();
-                window.contact_linkedin.href = linkedin;
+          const city = Personal.city();
+          window.personal_city.innerText = city;
+        </script>
+      </section>
 
-                const github = Contact.github();
-                window.contact_github.href = github;
+      <!-- SUMMARY-->
 
-                const city = Personal.city();
-                window.personal_city.innerText = city;
-            </script>
-        </section>
+      <section id="summary">
+        <h2>Summary</h2>
+        <p id="summary_text"></p>
+        <script id="script_summary">
+          window.summary_text.innerText = convert(Summary.description());
+        </script>
+      </section>
 
-        <!-- SUMMARY-->
+      <!-- EXPERIENCE-->
 
-        <section id="summary">
-            <h2>Summary</h2>
-            <p id="summary_text">
+      <section id="experience">
+        <h2>Experience</h2>
+        <template id="job">
+          <div class="job entry">
+            <h3>
+              <span class="title"></span>
+              <span class="dash"></span>
+              <span class="company"></span>
+            </h3>
+            <h4>
+              <span class="date"></span>
+              <span class="dash"></span>
+              <span class="city"></span>
+            </h4>
 
-            </p>
-            <script id="script_summary">
-                const summary = Summary.description();
-                window.summary_text.innerText = summary;
+            <div class="description"></div>
+          </div>
+        </template>
 
-            </script>
-        </section>
+        <script id="script_experience">
+          const filtered_work = Work.all();
 
-        <!-- EXPERIENCE-->
+          filtered_work.forEach((entry) => {
+            const job = window.job.content.cloneNode(true);
 
-        <section id="experience">
-            <h2>Experience</h2>
-            <template id="job">
-                <div class="job entry">
-                    <h3>
-                        <span class="title"></span>
-                        <span class="dash"></span>
-                        <span class="company"></span>
-                    </h3>
-                    <h4>
-                        <span class="date"></span>
-                        <span class="dash"></span>
-                        <span class="city"></span>
-                    </h4>
+            const title = entry.title;
+            const title_html = job.querySelector(".title");
+            title_html.innerText = title;
 
+            const company = entry.company;
+            const company_html = job.querySelector(".company");
+            company_html.innerText = company;
 
-                    <div class="description">
+            const city = entry.city;
+            const city_html = job.querySelector(".city");
+            city_html.innerText = city;
 
-                    </div>
+            const start = entry.start;
+            const end = entry.end || "present";
+            const date = start + " - " + end;
+            const date_html = job.querySelector(".date");
+            date_html.innerText = date;
 
-                </div>
-            </template>
+            const description = entry.description;
 
-            <script id="script_experience">
-                const filtered_work = Work.all();
+            const description_html = job.querySelector(".description");
+            description_html.innerHTML = convert(description);
 
-                filtered_work.forEach((entry) => {
+            window.experience.appendChild(job);
+          });
+        </script>
+      </section>
 
+      <!-- SKILLS -->
 
-                    const job = window.job.content.cloneNode(true);
+      <section id="skills">
+        <h2>Skills</h2>
+        <template id="skill">
+          <div class="skill entry">
+            <h3>
+              <span class="name"></span>
+              <span class="dash"></span>
+              <span class="level"></span>
+            </h3>
+          </div>
+        </template>
+        <script id="script_skills">
+          const filtered_skills = Skills.all();
 
-                    const title = entry.title;
-                    const title_html = job.querySelector(".title");
-                    title_html.innerText = title;
+          filtered_skills.forEach((entry) => {
+            const skill = window.skill.content.cloneNode(true);
+            const name = entry.name;
+            const name_html = skill.querySelector(".name");
+            name_html.innerText = name;
 
-                    const company = entry.company;
-                    const company_html = job.querySelector(".company");
-                    company_html.innerText = company;
+            const level = entry.level;
+            let level_category = "beginner";
+            if (level > 66) {
+              level_category = "expert";
+            } else if (level > 33) {
+              level_category = "intermediate";
+            }
+            const level_html = skill.querySelector(".level");
+            level_html.innerText = level_category;
 
-                    const city = entry.city;
-                    const city_html = job.querySelector(".city");
-                    city_html.innerText = city;
+            // We need to treat this differently in the future.
+            // const category = deserialized.category;
+            // const category_html = skill.querySelector(".category");
+            // category_html.innerText = category;
 
-                    const start = entry.start;
-                    const end = entry.end || "present";
-                    const date = start + " - " + end;
-                    const date_html = job.querySelector(".date");
-                    date_html.innerText = date;
+            window.skills.appendChild(skill);
+          });
+        </script>
+      </section>
 
-                    const description = entry.description;
+      <!-- EDUCATION -->
 
-                    const description_html = job.querySelector(".description")
-                    const splitted = splitByLineFeed(description);
-                    if (splitted.length > 1) {
-                        appendList(description_html, splitted);
-                    } else {
-                        appendText(description_html, description);
-                    }
+      <section id="educations">
+        <h2>Education</h2>
+        <template id="education">
+          <div class="education entry">
+            <h3>
+              <span class="subject"></span>
+              <span class="dash"></span>
+              <span class="university"></span>
+            </h3>
+            <h4>
+              <span class="date"></span>
+              <span class="dash"></span>
+              <span class="city"></span>
+            </h4>
+            <h4>
+              <span class="degree"></span>
+            </h4>
+            <p class="description"></p>
+          </div>
+        </template>
+        <script id="script_education">
+          const filtered_education = Education.all();
 
-                    window.experience.appendChild(job);
-                }); 
-            </script>
-        </section>
+          filtered_education.forEach((entry) => {
+            const education = window.education.content.cloneNode(true);
+            const subject = entry.subject;
+            const subject_html = education.querySelector(".subject");
+            subject_html.innerText = subject;
 
-        <!-- SKILLS -->
+            const degree = entry.degree;
+            const degree_html = education.querySelector(".degree");
+            degree_html.innerText = degree;
 
-        <section id="skills">
-            <h2>Skills</h2>
-            <template id="skill">
-                <div class="skill entry">
-                    <h3>
-                        <span class="name"></span>
-                        <span class="dash"></span>
-                        <span class="level"></span>
+            const city = entry.city;
+            const city_html = education.querySelector(".city");
+            city_html.innerText = city;
 
-                    </h3>
-                </div>
-            </template>
-            <script id="script_skills">
-                const filtered_skills = Skills.all();
+            const start = entry.start;
+            const end = entry.end || "present";
+            const date = start + " - " + end;
+            const date_html = education.querySelector(".date");
+            date_html.innerText = date;
 
-                filtered_skills.forEach((entry) => {
+            const description = entry.description;
+            const description_html = education.querySelector(".description");
+             description_html.innerHTML = convert(description);
+          
+            window.educations.appendChild(education);
+          });
+        </script>
 
-                    const skill = window.skill.content.cloneNode(true);
-                    const name = entry.name;
-                    const name_html = skill.querySelector(".name");
-                    name_html.innerText = name;
+        <script>
+          // If we have an id in the url (GET parameter), we want to overwrite parts of the education section.
+          const url = new URL(window.location.href);
+          const id = url.searchParams.get("id");
 
-                    const level = entry.level;
-                    let level_category = "beginner";
-                    if (level > 66) {
-                        level_category = "expert";
-                    } else if (level > 33) {
-                        level_category = "intermediate";
-                    }
-                    const level_html = skill.querySelector(".level");
-                    level_html.innerText = level_category;
-
-                    // We need to treat this differently in the future.
-                    // const category = deserialized.category;
-                    // const category_html = skill.querySelector(".category");
-                    // category_html.innerText = category;
-
-                    window.skills.appendChild(skill);
-                });
-            </script>
-        </section>
-
-        <!-- EDUCATION -->
-
-        <section id="educations">
-
-            <h2>Education</h2>
-            <template id="education">
-                <div class="education entry">
-                    <h3>
-                        <span class="subject"></span>
-                        <span class="dash"></span>
-                        <span class="university"></span>
-                    </h3>
-                    <h4>
-                        <span class="date"></span>
-                        <span class="dash"></span>
-                        <span class="city"></span>
-                    </h4>
-                    <h4>
-                        <span class="degree"></span>
-                    </h4>
-                    <p class="description"></p>
-                </div>
-            </template>
-            <script id="script_education">
-                const filtered_education = Education.all();
-
-                filtered_education.forEach((entry) => {
-
-
-
-                    const education = window.education.content.cloneNode(true);
-                    const subject = entry.subject;
-                    const subject_html = education.querySelector(".subject");
-                    subject_html.innerText = subject;
-
-                    const degree = entry.degree;
-                    const degree_html = education.querySelector(".degree");
-                    degree_html.innerText = degree;
-
-                    const city = entry.city;
-                    const city_html = education.querySelector(".city");
-                    city_html.innerText = city;
-
-                    const start = entry.start;
-                    const end = entry.end || "present";
-                    const date = start + " - " + end;
-                    const date_html = education.querySelector(".date");
-                    date_html.innerText = date;
-
-                    const description = entry.description;
-                    const description_html = education.querySelector(".description")
-                    const splitted = splitByLineFeed(description);
-                    if (splitted.length > 1) {
-                        appendList(description_html, splitted);
-                    } else {
-                        appendText(description_html, description);
-                    }
-
-
-                    window.educations.appendChild(education);
-                });
-            </script>
-
-            <script>
-               // If we have an id in the url (GET parameter), we want to overwrite parts of the education section.
-               const url = new URL(window.location.href);
-               const id = url.searchParams.get("id"); 
-                    
-               if (id) {
-                const cv = CV.load(id);
-                console.log(cv);
-               }
-            </script>
-
-        </section>
-
+          if (id) {
+            const cv = CV.load(id);
+            console.log(cv);
+          }
+        </script>
+      </section>
     </main>
-
-
-
-</body>
-
+  </body>
 </html>
