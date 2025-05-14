@@ -82,10 +82,6 @@
           color: blue;
         }
 
-        section {
-          page-break-inside: avoid;
-        }
-
         .entry {
           page-break-inside: avoid;
         }
@@ -147,8 +143,7 @@
           window.contact_email.href = `mailto:${email}`;
           window.contact_email.innerText = email;
 
-     
-          window.contact_linkedin.href = Contact.linkedin();;
+          window.contact_linkedin.href = Contact.linkedin();
 
           const github = Contact.github();
           window.contact_github.href = github;
@@ -223,47 +218,7 @@
         </script>
       </section>
 
-      <!-- SKILLS -->
 
-      <section id="skills">
-        <h2>Skills</h2>
-        <template id="skill">
-          <div class="skill entry">
-            <h3>
-              <span class="name"></span>
-              <span class="dash"></span>
-              <span class="level"></span>
-            </h3>
-          </div>
-        </template>
-        <script id="script_skills">
-          const filtered_skills = Skills.all();
-
-          filtered_skills.forEach((entry) => {
-            const skill = window.skill.content.cloneNode(true);
-            const name = entry.name;
-            const name_html = skill.querySelector(".name");
-            name_html.innerText = name;
-
-            const level = entry.level;
-            let level_category = "beginner";
-            if (level > 66) {
-              level_category = "expert";
-            } else if (level > 33) {
-              level_category = "intermediate";
-            }
-            const level_html = skill.querySelector(".level");
-            level_html.innerText = level_category;
-
-            // We need to treat this differently in the future.
-            // const category = deserialized.category;
-            // const category_html = skill.querySelector(".category");
-            // category_html.innerText = category;
-
-            window.skills.appendChild(skill);
-          });
-        </script>
-      </section>
 
       <!-- EDUCATION -->
 
@@ -312,11 +267,22 @@
 
             const description = entry.description;
             const description_html = education.querySelector(".description");
-             description_html.innerHTML = convert(description);
-          
+            description_html.innerHTML = convert(description);
+
             window.educations.appendChild(education);
           });
         </script>
+
+              <!-- SKILLS -->
+
+      <section id="skills">
+        <h2>Skills</h2>
+        <div id="skill_list"></div>
+
+        <script id="script_skills">
+          window.skill_list.innerHTML = convert(Skills.text());
+        </script>
+      </section>
 
         <script>
           // If we have an id in the url (GET parameter), we want to overwrite parts of the education section.

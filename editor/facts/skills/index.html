@@ -23,8 +23,7 @@
     <main>
         <h1>Skills</h1>
         <p>
-            Here we can manage our skills. We can add, edit and delete
-            skills.
+            Here we can manage our skills. Markdown suppports lists and strong text.
         </p>
         <nav>
             <ul>
@@ -33,56 +32,38 @@
                 </li>
             </ul>
         </nav>
-        <template id="skill">
-            <div>
-                <h2 class="name"></h2>
-                <h3 class="level"></h3>
-                <h4 class="category"></h4>
+            <form action="./" method="get" onsubmit="handleSubmit(event)">
+         
 
-                <div style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            ">
-                    <a class="edit" href="./edit.html?id=">Edit</a>
 
-                    <button class="remove">remove</button>
-                </div>
-            </div>
-        </template>
-        <output id="skills"></output>
+            <label for="skills">Skills</label>
+            <textarea id="skills" name="skills" rows="16" placeholder="Programming Languages: Typescript.."></textarea>
+
+
+            <br />
+            <dialog id="success">
+                <p class="message">Saved!</p>
+                <button class="close" type="button" onclick="window.success.close()">Close</button>
+                <button class="close" type="button" onclick="window.location.href = '../'">Return</button>
+            </dialog>
+            <button type="submit">Update</button>
+        </form>
+  
     </main>
 
+  
+<
+    
+    
+    </main>
     <script>
-        const filtered = Skills.all()
-        filtered.forEach((skill) => {
-            console.log(skill)
-
-            const skillHtml = window.skill.content.cloneNode(true);
-            skillHtml.querySelector(".name").innerText = skill.name;
-            skillHtml.querySelector(".level").innerText = skill.level;
-            skillHtml.querySelector(".category").innerText = skill.category;
-
-            skillHtml.querySelector(".edit").href += skill.id;
-
-            const removeButton = skillHtml.querySelector(".remove");
-            removeButton.value += skill.id;
-
-            removeButton.onclick = () => {
-                const id = removeButton.value
-
-                const confirmed = confirm("Really?")
-                if (!confirmed) {
-                    return;
-                }
-
-                Skills.remove(id)
-
-                window.location = "./"
-            }
-
-            window.skills.appendChild(skillHtml);
-        });
+     
+        window.skills.value = Skills.text() || "";
+        function handleSubmit(event) {
+            event.preventDefault()
+            Skills.update(window.skills.value,)
+            window.success.showModal()
+        }
     </script>
 </body>
 
