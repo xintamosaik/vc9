@@ -88,6 +88,20 @@
       }
     </style>
     <script src="index.js"></script>
+    <script>
+        /**
+         * Shortens a date in the format YYYY-MM-DD to a more readable format. (MM/YYYY)
+         * @param {string} date - The date string in the format YYYY-MM-DD.
+         */
+        function shortenDate(date) {
+            const parts = date.split("-");
+            if (parts.length === 3) {
+                return parts[1] + "/" + parts[0];
+            } else {
+                return date;
+            }
+        }
+    </script>
  
   </head>
 
@@ -190,8 +204,8 @@
             const city_html = job.querySelector(".city");
             city_html.innerText = entry.city;
 
-            const start = entry.start;
-            const end = entry.end || "present";
+            const start = shortenDate(entry.start);
+            const end =shortenDate( entry.end) || "present";
             const date = start + " - " + end;
             const date_html = job.querySelector(".date");
             date_html.innerText = date;
@@ -243,11 +257,11 @@
             const city_html = education.querySelector(".city");
             city_html.innerText = entry.city;
 
-            const start = entry.start;
-            const end = entry.end || "present";
-            const date = start + " - " + end;
+            // const start = shortenDate(entry.start)
+            const end = shortenDate(entry.end) || "present";
+            // const date = start + " - " + end;
             const date_html = education.querySelector(".date");
-            date_html.innerText = date;
+            date_html.innerText = "Finished " + end;
  
             const description_html = education.querySelector(".description");
             description_html.innerHTML = convert( entry.description);
