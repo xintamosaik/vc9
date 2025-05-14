@@ -36,6 +36,7 @@
 
             <script>
                 function parseJSON() {
+           
                     const json = document.forms.facts.elements.json.value;
 
                     if (!json) {
@@ -53,31 +54,32 @@
                     }
 
                     // Simple loader
+                
                     console.log(parsed)
-                    if (facts.personal) {
-                        Personal.update(facts.personal)
+                    if (parsed.personal) {
+                        Personal.update(parsed.personal)
                     }
 
-                    if (facts.contact) {
-                        Contact.update(facts.contact)
+                    if (parsed.contact) {
+                        Contact.update(parsed.contact)
                     }
 
-                    if (facts.summary) {
-                        Summary.update(facts.summary)
+                    if (parsed.summary) {
+                        Summary.update(parsed.summary)
                     }
 
-                    if (facts.skills) {
-                        Skills.update(facts.skills)
+                    if (parsed.skills) {
+                        Skills.update(parsed.skills)
                     }
 
-                    if (facts.work) {
-                        facts.work.forEach(work => {
+                    if (parsed.work) {
+                        parsed.work.forEach(work => {
                             Work.update(work.id, work)
                         })
                     }
 
-                    if (facts.education) {
-                        facts.education.forEach(education => {
+                    if (parsed.education) {
+                        parsed.education.forEach(education => {
                             Education.update(education.id, education)
                         })
                     }
