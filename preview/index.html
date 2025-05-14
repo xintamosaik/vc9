@@ -88,13 +88,7 @@
       }
     </style>
     <script src="index.js"></script>
-    <script>
-      function appendText(container, text) {
-        const p = document.createElement("p");
-        p.innerText = text;
-        container.appendChild(p);
-      }
-    </script>
+ 
   </head>
 
   <body>
@@ -119,8 +113,7 @@
               : "(please add your name to the personal section)";
           window.personal_name.innerText = full;
 
-          const title = Summary.title();
-          window.summary_title.innerText = title;
+          window.summary_title.innerText =  Summary.title()
         </script>
       </section>
 
@@ -144,12 +137,8 @@
           window.contact_email.innerText = email;
 
           window.contact_linkedin.href = Contact.linkedin();
-
-          const github = Contact.github();
-          window.contact_github.href = github;
-
-          const city = Personal.city();
-          window.personal_city.innerText = city;
+          window.contact_github.href = Contact.github();
+          window.personal_city.innerText = Personal.city();
         </script>
       </section>
 
@@ -190,17 +179,16 @@
           filtered_work.forEach((entry) => {
             const job = window.job.content.cloneNode(true);
 
-            const title = entry.title;
+            
             const title_html = job.querySelector(".title");
-            title_html.innerText = title;
+            title_html.innerText = entry.title;
 
             const company = entry.company;
             const company_html = job.querySelector(".company");
             company_html.innerText = company;
 
-            const city = entry.city;
             const city_html = job.querySelector(".city");
-            city_html.innerText = city;
+            city_html.innerText = entry.city;
 
             const start = entry.start;
             const end = entry.end || "present";
@@ -208,10 +196,8 @@
             const date_html = job.querySelector(".date");
             date_html.innerText = date;
 
-            const description = entry.description;
-
             const description_html = job.querySelector(".description");
-            description_html.innerHTML = convert(description);
+            description_html.innerHTML = convert(entry.description);
 
             window.experience.appendChild(job);
           });
@@ -247,27 +233,24 @@
 
           filtered_education.forEach((entry) => {
             const education = window.education.content.cloneNode(true);
-            const subject = entry.subject;
+
             const subject_html = education.querySelector(".subject");
-            subject_html.innerText = subject;
-
-            const degree = entry.degree;
+            subject_html.innerText =  entry.subject;
+ 
             const degree_html = education.querySelector(".degree");
-            degree_html.innerText = degree;
-
-            const city = entry.city;
+            degree_html.innerText = entry.degree;
+ 
             const city_html = education.querySelector(".city");
-            city_html.innerText = city;
+            city_html.innerText = entry.city;
 
             const start = entry.start;
             const end = entry.end || "present";
             const date = start + " - " + end;
             const date_html = education.querySelector(".date");
             date_html.innerText = date;
-
-            const description = entry.description;
+ 
             const description_html = education.querySelector(".description");
-            description_html.innerHTML = convert(description);
+            description_html.innerHTML = convert( entry.description);
 
             window.educations.appendChild(education);
           });

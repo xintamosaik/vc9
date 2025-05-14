@@ -13,7 +13,6 @@ function removeLeadingDash(line) {
     return line.slice(indexOfLine + 1).trim();
 }
 
-
 /**
  * Converts double asterisks in a line to <strong> HTML tags.
  * 
