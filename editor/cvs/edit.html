@@ -69,7 +69,7 @@
             console.log({ data })
             const serialized = JSON.stringify(data);
             localStorage.setItem(`cv.${id ? id : timestamp}`, serialized);
-1
+
             return id ? id : timestamp;
 
         }

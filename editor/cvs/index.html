@@ -21,7 +21,7 @@
             CVs Editor
         </h1>
         <p>
-            Here we can manage different drafts for diffrent companies or different positions.
+            Here we can manage different drafts for different companies or different positions.
         </p>
         <nav>
             <a href="../cvs/edit.html">Add new CV</a>
@@ -45,7 +45,7 @@
                 key.startsWith("cv.")
             );
         
-            filtered.forEach(([key, value]) => {
+            filtered.forEach(([, value]) => {
                 
                 const clone = document.getElementById('cv-template').content.cloneNode(true);
                 const sector = clone.querySelector('.sector');
